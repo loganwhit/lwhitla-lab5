@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
   successMessage: string = '';
 
   constructor(public authService: AuthService,
-   
+    private router: Router,
     private fb: FormBuilder) {this.createForm(); }
 
   ngOnInit() {
@@ -33,6 +33,8 @@ export class RegisterComponent implements OnInit {
       console.log(res);
       this.errorMessage = "";
       this.successMessage = "Your account has been created";
+      alert('Please verify your email');
+      this.router.navigate(['/start']);
     }, err => {
       console.log(err);
       this.errorMessage = err.message;

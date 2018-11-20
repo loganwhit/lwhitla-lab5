@@ -18,7 +18,8 @@ import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './core/auth.guard'
-import {UserResolver} from './user/user.resolver'
+import {UserResolver} from './user/user.resolver';
+import { StartComponent } from './start/start.component'
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {UserResolver} from './user/user.resolver'
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    UserComponent
+    UserComponent,
+    StartComponent
   ],
   imports: [
     BrowserModule,

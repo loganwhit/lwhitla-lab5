@@ -5,10 +5,12 @@ import { RegisterComponent } from './register/register.component'
 import { UserComponent } from './user/user.component'
 import {AuthGuard} from './core/auth.guard'
 import { UserResolver } from './user/user.resolver';
+import {StartComponent} from './start/start.component'
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'start', pathMatch: 'full' },
+  {path: 'start', component: StartComponent},
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'user', component: UserComponent,  resolve: { data: UserResolver}}

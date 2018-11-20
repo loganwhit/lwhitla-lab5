@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     .then(res => {
       this.router.navigate(['/user']);
     }, err => {
+      alert('Please register for an account');
       console.log(err);
       this.errorMessage = err.message;
     })

@@ -5,6 +5,10 @@
    
     
 }
+#loginNavButton{
+    position: absolute;
+    right: 5%;
+}
 #pass{
     width:300px;
     height:75px;
