@@ -9,7 +9,7 @@ import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
 import {MatIconModule} from '@angular/material';
-import {MatMenuModule, MatToolbarModule, MatCardModule, MatButtonToggleModule,MatTabsModule} from '@angular/material'
+import {MatMenuModule, MatToolbarModule, MatCardModule, MatButtonToggleModule,MatTabsModule, MatListModule} from '@angular/material'
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -47,7 +47,8 @@ import { StartComponent } from './start/start.component'
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatListModule
   ],
   providers: [AuthGuard,UserResolver],
   bootstrap: [AppComponent]

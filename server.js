@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(express.static('./public'));
 
-var port = process.env.Port || 8080;
+var port = process.env.Port || 8081;
 
 var router = express.Router();
 //Middleware can be used for authentication

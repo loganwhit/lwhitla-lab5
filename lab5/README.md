@@ -31,3 +31,20 @@ https://github.com/AngularTemplates/firebase-authentication-with-angular-5
 
 https://angular-templates.io/tutorials/about/firebase-authentication-with-angular?fbclid=IwAR2BLHKp-FbK40yG9pTvU_96bgHduq10vmgHCM7FSVKbdEay8UYP8j7wcKs 
 Both sources were used in conjunction in creating the user authentication experience for the application.This includes the login, logout, and register functionality. Code was modified slightly at points to adjust for Angular 7 versus Angular 5 but otherwise is almost exactly the same.
+
+## Proxy Configurations
+{
+    "/api": {
+        "target": "https://lwhitla-lab4-loganwhit.c9users.io:8081",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "info"
+    }
+}
+{
+    "/api/*": {
+        "target": "http://localhost:8081",
+        "secure": false
+    }
+}
+
