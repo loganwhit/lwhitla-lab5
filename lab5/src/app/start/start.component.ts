@@ -24,7 +24,12 @@ export class StartComponent implements OnInit {
     for(var x in unsortedItems){
       this.itemArr.push(unsortedItems[x]);
     }
+    try{
     this.items=this.sortItems(this.itemArr);
+    }
+    catch(err){
+      console.log(err);
+    }
    }
 
   ngOnInit() {
