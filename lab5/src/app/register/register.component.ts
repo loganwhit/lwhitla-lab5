@@ -17,7 +17,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(public authService: AuthService,
     private router: Router,
-    private fb: FormBuilder) {this.createForm(); }
+    private fb: FormBuilder) {this.createForm();
+     }
 
   ngOnInit() {
   }
@@ -27,7 +28,13 @@ export class RegisterComponent implements OnInit {
       password: ['',Validators.required]
     });
   }
-  tryRegister(value){
+  
+  tryRegister(value,verPass){
+    if (!(value.password==verPass))
+    {
+      alert("Please make sure passwords match");
+      return;
+    }
     
     this.authService.doRegister(value)
     .then(res => {

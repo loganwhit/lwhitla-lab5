@@ -11,8 +11,8 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 export class LoginComponent implements OnInit {
   hide =true;
   loginForm: FormGroup;
-  errorMessage: string = '';
-  verify='';
+  
+  message='';
   constructor(public authService: AuthService,
     private router: Router,
     private fb: FormBuilder) {
@@ -30,16 +30,22 @@ export class LoginComponent implements OnInit {
   login(value){
     this.authService.doLogin(value)
     .then(res => {
+      console.log(res);
       if(!res.user.emailVerified){
-        this.verify='Please verify your email address';
-
+        this.message='Please verify your email address';
       }
+      
       
       this.router.navigate(['/user']);
     }, err => {
-      alert('Please register for an account');
       console.log(err);
-      this.errorMessage = err.message;
+      if(err.code=="auth/user-disabled"){
+        this.message=err.message+" Please contact the store manager."
+      }
+      else{
+        this.message=err.message;
+      }
+      
     })
   }
 

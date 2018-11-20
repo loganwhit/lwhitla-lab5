@@ -21,7 +21,16 @@
         </mat-form-field>
       </div>
       <br>
-      <button mat-raised-button type="submit" (click)="tryRegister(registerForm.value)" class="btn btn-success">Submit</button>
+      <div class="form-group">
+          <mat-form-field id="pass" appearance="outline">
+              <mat-label>Re-enter Password</mat-label>
+                <input matInput class="form-control"  #re_enterpass placeholder="Password" [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide">{{ hide ? 'visibility_off' : 'visibility'}}
+                </mat-icon>
+          </mat-form-field>
+        </div>
+        <br>
+      <button mat-raised-button type="submit" (click)="tryRegister(registerForm.value,re_enterpass.value)" class="btn btn-success">Submit</button>
       <br>
       <h3>{{verify}}</h3>
     </div>
