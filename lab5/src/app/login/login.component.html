@@ -1,0 +1,23 @@
+<div id="login">
+  <h2>Login</h2>
+  <form [formGroup]="loginForm">
+    <div class="loginInput">
+      <mat-form-field id="user" appearance="outline">
+        <input matInput formControlName="email" type="email" class="form-control" #username placeholder="Username">
+      </mat-form-field>
+      <br>
+      <mat-form-field id="pass" appearance="outline">
+        <input matInput class="form-control" formControlName="password" #password placeholder="Password" [type]="hide ? 'password' : 'text'">
+        <mat-icon matSuffix (click)="hide = !hide">{{ hide ? 'visibility_off' : 'visibility'}}
+        </mat-icon>
+      </mat-form-field>
+      <br>
+      <button mat-raised-button type="submit" (click)="login(loginForm.value)" class="btn btn-success">Submit</button>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <p>No account yet? <a href="/register">Create an account</a></p>
+    </div>
+  </div>
+</div>

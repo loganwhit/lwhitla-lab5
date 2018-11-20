@@ -1,0 +1,15 @@
+.registerInput {
+    position: absolute;
+    top:20%;
+    left:40%;
+   
+    
+}
+#pass{
+    width:300px;
+    height:75px;
+}
+#user{
+    width:300px;
+    height:75px;
+}
