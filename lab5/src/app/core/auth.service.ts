@@ -34,7 +34,7 @@ export class AuthService {
         resolve(res);
         if(!user.emailVerified){
           this.doLogout();
-          alert('Please verify your email address');
+          
 
 
         }

@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   errorMessage: string = '';
   successMessage: string = '';
+  verify='';
 
   constructor(public authService: AuthService,
     private router: Router,
@@ -33,11 +34,12 @@ export class RegisterComponent implements OnInit {
       console.log(res);
       this.errorMessage = "";
       this.successMessage = "Your account has been created";
-      alert('Please verify your email');
-      this.router.navigate(['/start']);
+      this.verify='Please verify your email';
+      
     }, err => {
       console.log(err);
       this.errorMessage = err.message;
+      alert(this.errorMessage);
       this.successMessage = "";
     })
   }

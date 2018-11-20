@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   hide =true;
   loginForm: FormGroup;
   errorMessage: string = '';
+  verify='';
   constructor(public authService: AuthService,
     private router: Router,
     private fb: FormBuilder) {
@@ -29,6 +30,11 @@ export class LoginComponent implements OnInit {
   login(value){
     this.authService.doLogin(value)
     .then(res => {
+      if(!res.user.emailVerified){
+        this.verify='Please verify your email address';
+
+      }
+      
       this.router.navigate(['/user']);
     }, err => {
       alert('Please register for an account');
