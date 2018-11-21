@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import {StartService} from './start.service';
+import {MatDialog} from '@angular/material/dialog';
+import {StartItemComponent} from '../start-item/start-item.component'
 
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
   styleUrls: ['./start.component.css'],
   
+  
 })
 export class StartComponent implements OnInit {
   items;
   private itemArr;
 
-  constructor(private startServ: StartService) {
+  constructor(public dialog: MatDialog, private startServ: StartService) {
     this.itemArr=[];
     this.items=[];
     var unsortedItems;
@@ -53,6 +56,19 @@ export class StartComponent implements OnInit {
     }
 
   }
+  openDialog(item) {
+    
+    let dialogRef = this.dialog.open(StartItemComponent, {
+      width: '600px',
+      data: {name: item.name,
+        descript: item.descript,
+        comments: item.comments
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog closed: ${result}`);
+      this.dialogResult = result;
+    });
 
 
 }

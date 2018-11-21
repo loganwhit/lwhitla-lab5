@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AdminService} from './admin.service'
+import {AuthService} from '../core/auth.service'
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -10,7 +12,9 @@ import { AdminService} from './admin.service'
 export class AdminComponent implements OnInit {
   addItem: FormGroup;
   constructor(private fb: FormBuilder,
-  private adminServ : AdminService) {
+  private router: Router,
+  private adminServ : AdminService,
+  private authService: AuthService) {
        this.createForm() }
 
   ngOnInit() {
@@ -21,7 +25,8 @@ export class AdminComponent implements OnInit {
       quantity: ['',Validators.required],
       price: ['',Validators.required],
       tax: ['',Validators.required],
-      amountSold: ['',Validators.required]
+      amountSold: ['',Validators.required],
+      descript:['',Validators.required]
     });
   }
   createItem(value){
@@ -32,6 +37,15 @@ export class AdminComponent implements OnInit {
       
     }, err => {
       console.log(err);
+    });
+  }
+  logout(){
+    this.authService.doLogout()
+    .then((res) => {
+     
+      this.router.navigate(['/start']);
+    }, (error) => {
+      console.log("Logout error", error);
     });
   }
 

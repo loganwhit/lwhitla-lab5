@@ -14,7 +14,8 @@ export class AdminService {
         price: value.price,
         tax: value.tax,
         quantity: value.quantity,
-        itemsSold: value.amountSold
+        itemsSold: value.amountSold,
+        descript: value.descript
     }
     return new Promise<any>((resolve, reject) => {
       fetch(this.url, {

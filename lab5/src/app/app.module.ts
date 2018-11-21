@@ -9,7 +9,7 @@ import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
 import {MatIconModule} from '@angular/material';
-import {MatMenuModule, MatToolbarModule, MatCardModule, MatButtonToggleModule,MatTabsModule, MatListModule} from '@angular/material'
+import {MatMenuModule, MatToolbarModule, MatCardModule, MatButtonToggleModule,MatTabsModule, MatListModule,MatDialogModule} from '@angular/material'
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -21,7 +21,8 @@ import { AuthGuard } from './core/auth.guard'
 import {UserResolver} from './user/user.resolver';
 import { StartComponent } from './start/start.component';
 import { AdminComponent } from './admin/admin.component';
-import { ProfileComponent } from './profile/profile.component'
+import { ProfileComponent } from './profile/profile.component';
+import { StartItemComponent } from './start-item/start-item.component'
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { ProfileComponent } from './profile/profile.component'
     UserComponent,
     StartComponent,
     AdminComponent,
-    ProfileComponent
+    ProfileComponent,
+    StartItemComponent
   ],
   imports: [
     BrowserModule,
@@ -52,8 +54,11 @@ import { ProfileComponent } from './profile/profile.component'
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     ReactiveFormsModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
   ],
+  entryComponents:[StartItemComponent],
+
   providers: [AuthGuard,UserResolver],
   bootstrap: [AppComponent]
 })
