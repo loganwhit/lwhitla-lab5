@@ -20,7 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './core/auth.guard'
 import {UserResolver} from './user/user.resolver';
 import { StartComponent } from './start/start.component';
-import { AdminComponent } from './admin/admin.component'
+import { AdminComponent } from './admin/admin.component';
+import { ProfileComponent } from './profile/profile.component'
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AdminComponent } from './admin/admin.component'
     RegisterComponent,
     UserComponent,
     StartComponent,
-    AdminComponent
+    AdminComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -6,13 +6,12 @@ import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseUserModel } from '../core/user.model';
 
-
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
-export class UserComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   user: FirebaseUserModel = new FirebaseUserModel();
   profileForm: FormGroup;
 
@@ -24,12 +23,28 @@ export class UserComponent implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit() {
-
+    this.route.data.subscribe(routeData => {
+    let data = routeData['data'];
+    if (data) {
+      this.user = data;
+      this.createForm(this.user.name);
+    }
+  })
   }
   isAdmin(){
     // if(this.userService.getCurrentUser())
   }
-
+  createForm(name) {
+    this.profileForm = this.fb.group({
+      name: [name, Validators.required ]
+    });
+  }
+  save(value){
+    this.userService.updateCurrentUser(value)
+    .then(res => {
+      console.log(res);
+    }, err => console.log(err))
+  }
   logout(){
     this.authService.doLogout()
     .then((res) => {
@@ -39,5 +54,3 @@ export class UserComponent implements OnInit {
       console.log("Logout error", error);
     });
   }
-
-}

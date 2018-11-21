@@ -7,6 +7,7 @@ import {AuthGuard} from './core/auth.guard';
 import { UserResolver } from './user/user.resolver';
 import {StartComponent} from './start/start.component';
 import {AdminComponent} from './admin/admin.component';
+import {ProfileComponent} from './profile/profile.component';
 
 
 const routes: Routes = [
@@ -14,8 +15,9 @@ const routes: Routes = [
   {path: 'start', component: StartComponent},
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
-  { path: 'user', component: UserComponent,  resolve: { data: UserResolver}},
-  { path: 'admin', component: AdminComponent}
+  { path: 'user', component: UserComponent },
+  { path: 'admin', component: AdminComponent},
+  { path: 'profile', component: ProfileComponent, resolve: { data: UserResolver}}
 ];
 
 @NgModule({

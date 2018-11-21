@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service'
 import { Router, Params } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-
+import {UserService} from '../core/user.service'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   
   message='';
   constructor(public authService: AuthService,
+  public userService : UserService,
     private router: Router,
     private fb: FormBuilder) {
       this.createForm();
@@ -33,6 +34,13 @@ export class LoginComponent implements OnInit {
       console.log(res);
       if(!res.user.emailVerified){
         this.message='Please verify your email address';
+      }
+      if(res.user.displayName==null){
+      var userName= value.email.substr(0, value.email.indexOf('@'));
+      
+      let data = {name:userName}
+
+      this.userService.updateCurrentUser(data);
       }
       
       

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service'
 import { Router, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -15,7 +16,8 @@ export class RegisterComponent implements OnInit {
   successMessage: string = '';
   verify='';
 
-  constructor(public authService: AuthService,
+  constructor( 
+  public authService: AuthService,
     private router: Router,
     private fb: FormBuilder) {this.createForm();
      }
@@ -42,6 +44,8 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = "";
       this.successMessage = "Your account has been created";
       this.verify='Please verify your email';
+      
+      
       
     }, err => {
       console.log(err);
