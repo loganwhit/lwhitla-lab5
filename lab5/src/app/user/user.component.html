@@ -1,6 +1,9 @@
-<nav id="logoutNavButton" mat-tab-nav-bar>
-    <a mat-tab-link (click)="logout()" routerLink="/start">Logout</a>
+<nav  mat-tab-nav-bar>
+    <a mat-tab-link routerLink="/user">Home</a>
+    <a mat-tab-link routerLink="/admin">Admin</a>
+    <a mat-tab-link id="logoutNavButton" (click)="logout()" routerLink="/start">Logout</a>
 </nav>
+
 <!-- <div class="col-md-4">
     <button type="button" (click)="logout()" class="btn btn-link">Logout</button>
 </div> -->

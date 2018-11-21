@@ -4,32 +4,38 @@ import {StartService} from './start.service';
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
-  styleUrls: ['./start.component.css']
+  styleUrls: ['./start.component.css'],
+  
 })
 export class StartComponent implements OnInit {
-  private items;
+  items;
   private itemArr;
 
   constructor(private startServ: StartService) {
     this.itemArr=[];
+    this.items=[];
     var unsortedItems;
     unsortedItems = this.startServ.getAll()
     .then(res => {
       console.log(res);
-      return JSON.parse(res);
+      for(var x in res){
+        
       
-    }, err => {
-      console.log(err);
-    })
-    for(var x in unsortedItems){
-      this.itemArr.push(unsortedItems[x]);
+      this.itemArr.push(res[x]);
     }
     try{
-    this.items=this.sortItems(this.itemArr);
+      
+    this.sortItems(this.itemArr);
     }
     catch(err){
       console.log(err);
     }
+      
+    }, err => {
+      console.log(err);
+    });
+    
+    
    }
 
   ngOnInit() {
@@ -37,9 +43,11 @@ export class StartComponent implements OnInit {
   sortItems(itemList){
     
     itemList.sort(function(a,b){
+     
       return parseInt(a.itemsSold)-parseInt(b.itemsSold);
-    });
-    for (var i=0; i<11; i++){
+    })
+    itemList=itemList.reverse();
+    for (var i=0; i<11&&i<itemList.length; i++){
       this.items.push(itemList[i]);
 
     }

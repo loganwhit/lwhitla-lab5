@@ -1,0 +1,38 @@
+<nav mat-tab-nav-bar>
+    <a mat-tab-link routerLink="/user">Home</a>
+    <a mat-tab-link id="logoutNavButton" (click)="logout()" routerLink="/start">Logout</a>
+</nav>
+<h3>Add Item</h3>
+<div class="container">
+    <form [formGroup]="addItem">
+    <label>Name </label>
+      <div class="form-group">
+        
+        <input type="text" formControlName="name" class="form-control" #name placeholder="Enter name">
+      </div>
+      <label>Quantity </label>
+      <div class="form-group">
+        
+        <input type="number" formControlName="quantity" class="form-control" #quant placeholder="Enter quantity">
+      </div>
+      <label>Price </label>
+      <div class="form-group">
+        
+        <input type="number" formControlName="price" class="form-control" #price placeholder="Enter price">
+      </div>
+      <label>Tax </label>
+      <div class="form-group">
+
+        <input type="number" formControlName="tax" class="form-control" #tax placeholder="Enter tax">
+      </div>
+      
+      <label>Amount Sold </label>
+      <div class="form-group">
+
+        <input type="number" formControlName="amountSold" class="form-control" #sold placeholder="Enter amount sold">
+      </div>
+ 
+      <button (click)="createItem(addItem.value)" type="submit" class="btn btn-success">Submit</button>
+    </form>
+  
+</div>
