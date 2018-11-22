@@ -10,7 +10,7 @@ import * as firebase from 'firebase/app';
   styleUrls: ['./user-item.component.css']
 })
 export class UserItemComponent implements OnInit {
-  showCommentFSield;
+  showCommentField;
   numbers;
   constructor(public thisDialogRef: MatDialogRef<UserItemComponent>, @Inject(MAT_DIALOG_DATA) public data, private commentService : ItemCommentService) { this.showCommentField=false;
     this.numbers = Array(this.data.item.comments.length).fill().map((x,i)=>i);

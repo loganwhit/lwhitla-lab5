@@ -14,6 +14,7 @@ export class StartComponent implements OnInit {
   items;
   private itemArr;
   showMore;
+  dialogResult;
   
 
   constructor(public dialog: MatDialog, private startServ: StartService) {
@@ -72,11 +73,8 @@ export class StartComponent implements OnInit {
     
     let dialogRef = this.dialog.open(StartItemComponent, {
       width: '600px',
-      data: {name: item.name,
-        descript: item.descript,
-        comments: item.comments,
-        ratings: item.ratings,
-        users: item.users,
+      data: {item: item
+        
       },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -85,4 +83,5 @@ export class StartComponent implements OnInit {
     });
 
 
+}
 }

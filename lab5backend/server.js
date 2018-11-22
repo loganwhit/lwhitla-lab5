@@ -120,6 +120,31 @@ router.route('/items/:item_id')
         
         });
     });
+router.route('/items/comment/:item_id')
+.put(function(req,res){
+        Item.findById(req.params.item_id, function(err,item){
+            if(err){
+                res.send(err);
+            }
+            if(req.body.comment != undefined){
+            item.comments.push(req.body.comment);
+            }
+            if(req.body.rating != undefined){
+            item.ratings.push(req.body.rating);
+            }
+            if(req.body.user != undefined){
+            item.users.push(req.body.user);
+            }
+            
+            item.save(function(err){
+                if(err){
+                    res.send(err);
+                }
+                res.json({message: 'Item updated'});
+            });
+        });
+        
+    })
 
 //Start server
 app.listen(port);

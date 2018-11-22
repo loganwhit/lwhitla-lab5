@@ -7,7 +7,9 @@ import {MatDialogRef} from '@angular/material';
   styleUrls: ['./start-item.component.css']
 })
 export class StartItemComponent implements OnInit {
-  constructor(public thisDialogRef: MatDialogRef<StartItemComponent>, @Inject(MAT_DIALOG_DATA) public data: string) { }
+  numbers;
+  constructor(public thisDialogRef: MatDialogRef<StartItemComponent>, @Inject(MAT_DIALOG_DATA) public data) {
+    this.numbers = Array(this.data.item.comments.length).fill().map((x,i)=>i);}
   ngOnInit() {
   }
   onCloseConfirm() {

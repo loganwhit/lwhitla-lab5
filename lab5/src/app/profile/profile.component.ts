@@ -54,3 +54,4 @@ export class ProfileComponent implements OnInit {
       console.log("Logout error", error);
     });
   }
+}

@@ -16,7 +16,7 @@ import {UserItemComponent} from '../user-item/user-item.component';
 })
 export class UserComponent implements OnInit {
   
-  
+  dialogResult;
   items;
   private itemArr;
   showMore;
@@ -92,13 +92,7 @@ export class UserComponent implements OnInit {
     
     let dialogRef = this.dialog.open(UserItemComponent, {
       width: '600px',
-      data: {name: item.name,
-        descript: item.descript,
-        comments: item.comments,
-        ratings: item.ratings,
-        users: item.users,
-        price: item.price,
-        quantity: item.quantity
+      data: {item : item
         
       },
     });
@@ -107,4 +101,5 @@ export class UserComponent implements OnInit {
       this.dialogResult = result;
     });
 
+}
 }

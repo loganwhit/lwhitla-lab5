@@ -10,7 +10,7 @@ var ItemSchema = new Schema({
     descript: String,
     comments: [{type: String}],
     users: [{type: String}],
-    rating: [{type: Number}]
+    ratings: [{type: Number}]
 });
 
 module.exports = mongoose.model('Item',ItemSchema);
