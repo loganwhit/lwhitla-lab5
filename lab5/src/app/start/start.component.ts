@@ -13,8 +13,11 @@ import {StartItemComponent} from '../start-item/start-item.component'
 export class StartComponent implements OnInit {
   items;
   private itemArr;
+  showMore;
+  
 
   constructor(public dialog: MatDialog, private startServ: StartService) {
+    this.showMore=false;
     this.itemArr=[];
     this.items=[];
     var unsortedItems;
@@ -43,6 +46,14 @@ export class StartComponent implements OnInit {
 
   ngOnInit() {
   }
+  showOrHide(){
+    if(this.showMore==true){
+      this.showMore=false;
+    }
+    else{
+      this.showMore=true;
+    }
+  }
   sortItems(itemList){
     
     itemList.sort(function(a,b){
@@ -50,6 +61,7 @@ export class StartComponent implements OnInit {
       return parseInt(a.itemsSold)-parseInt(b.itemsSold);
     })
     itemList=itemList.reverse();
+    this.itemArr=itemList;
     for (var i=0; i<11&&i<itemList.length; i++){
       this.items.push(itemList[i]);
 
@@ -62,7 +74,9 @@ export class StartComponent implements OnInit {
       width: '600px',
       data: {name: item.name,
         descript: item.descript,
-        comments: item.comments
+        comments: item.comments,
+        ratings: item.ratings,
+        users: item.users,
       },
     });
     dialogRef.afterClosed().subscribe(result => {

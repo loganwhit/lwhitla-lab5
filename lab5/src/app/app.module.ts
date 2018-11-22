@@ -22,7 +22,9 @@ import {UserResolver} from './user/user.resolver';
 import { StartComponent } from './start/start.component';
 import { AdminComponent } from './admin/admin.component';
 import { ProfileComponent } from './profile/profile.component';
-import { StartItemComponent } from './start-item/start-item.component'
+import { StartItemComponent } from './start-item/start-item.component';
+import { UserItemComponent } from './user-item/user-item.component';
+
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { StartItemComponent } from './start-item/start-item.component'
     StartComponent,
     AdminComponent,
     ProfileComponent,
-    StartItemComponent
+    StartItemComponent,
+    UserItemComponent,
+  
   ],
   imports: [
     BrowserModule,
@@ -55,9 +59,10 @@ import { StartItemComponent } from './start-item/start-item.component'
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     ReactiveFormsModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+   
   ],
-  entryComponents:[StartItemComponent],
+  entryComponents:[StartItemComponent, UserItemComponent],
 
   providers: [AuthGuard,UserResolver],
   bootstrap: [AppComponent]

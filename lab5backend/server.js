@@ -57,6 +57,7 @@ router.route('/items')
         else{
             item.itemsSold=req.body.itemsSold;
         }
+        item.descript=req.body.descript
         
         item.save(function(err){
             if(err){

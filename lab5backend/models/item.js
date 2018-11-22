@@ -6,7 +6,11 @@ var ItemSchema = new Schema({
     price: Number,
     quantity: Number,
     tax: Number,
-    itemsSold: Number
+    itemsSold: Number,
+    descript: String,
+    comments: [{type: String}],
+    users: [{type: String}],
+    rating: [{type: Number}]
 });
 
 module.exports = mongoose.model('Item',ItemSchema);

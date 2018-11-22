@@ -8,16 +8,30 @@
 <br>
 <body>
     <p>Welcome to Log's Goods. The site offers a marketplace for antique goods. Please register and sign in for additional functionality</p>
+    <div *ngIf="!showMore">
     <mat-list>
         <mat-list-item *ngFor="let item of items"> 
        <!--<a routerLink {{item.name}} -->
        <a (click)="openDialog(item)">{{item.name}}</a>
-     
-       
-     
-       
-        
         </mat-list-item>
     </mat-list>
+    <div *ngIf="!(itemArr.length<11)">
+    <button mat-button (click) = showOrHide()>Show More</button>
+    </div>
+    </div>
+    
+    <div *ngIf="showMore">
+    <mat-list>
+        <mat-list-item *ngFor="let item of itemArr"> 
+       <!--<a routerLink {{item.name}} -->
+       <a (click)="openDialog(item)">{{item.name}}</a>
+        </mat-list-item>
+    </mat-list>
+    <div *ngIf="itemArr.length>10">
+    <button mat-button (click) = showOrHide()>Hide</button>
+    </div>
+    </div>
+    
+    
 
 </body>
