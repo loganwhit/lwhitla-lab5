@@ -1,0 +1,40 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ItemCommentService {
+  const url = './api/items/comment/';
+  
+  constructor() { }
+  
+  addItemComment(item,comment, rating,user){
+    var id =item._id;
+    var itemUrl = this.url+id;
+    var dName = user.displayName;
+    
+    let data={
+        comment: comment,
+        rating: rating,
+        user: dName
+    }
+   
+    
+    return new Promise<any>((resolve, reject) => {
+      
+      fetch(itemUrl, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers:{
+        'Content-Type': 'application/json'
+  }})
+      .then((res) => {
+        
+        resolve(res.json());
+        
+      }), err => reject(err.json())
+  
+  
+    })
+  }
+}

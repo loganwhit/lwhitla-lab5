@@ -1,12 +1,12 @@
 
 <div>
     
-  <h2 mat-dialog-title>{{data.name}}</h2>
+  <h2 mat-dialog-title>{{data.item.name}}</h2>
  
   <label>Description</label>
   <hr>
   <mat-dialog-content>
-    {{data.descript}}
+    {{data.item.descript}}
     <br>
     <br>
  
@@ -14,15 +14,18 @@
   <label>Comments</label>
   <hr>
   <mat-list>
-      <mat-list-item *ngFor="let userName of data.users"> 
-         {{userName}}
-        </mat-list-item>
-          <mat-list-item *ngFor="let rating of data.ratings"> 
-         {{rating}}
-        </mat-list-item>
-        <mat-list-item *ngFor="let comment of data.comments"> 
-         {{comment}}
-        </mat-list-item>
+      <mat-list-item *ngFor="let num of numbers"> 
+     
+        <label matLine>{{data.item.users[num]}}</label>
+        <hr matLine>
+       
+        <h3 matLine>{{data.item.ratings[num]}} Stars</h3>
+        
+        <p matLine>Comment: {{data.item.comments[num]}}</p>
+      
+       
+       
+      </mat-list-item>
     </mat-list>
     <div *ngIf="!showCommentField">
     <button mat-raised-button (click)="addComment()">Add Comment</button>
@@ -39,7 +42,8 @@
         <br>
         <br>
         <textarea matInput #comment placeholder="Leave a comment"></textarea>
-        <button mat-raised-button (click)="submitComment(comment)"></button>
+        <button mat-raised-button (click)="submitComment(comment.value)">Submit Comment</button>
+        <br>
     
     </div>
         

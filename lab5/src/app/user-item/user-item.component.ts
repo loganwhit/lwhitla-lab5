@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
 import {MatDialogRef} from '@angular/material';
+import {ItemCommentService} from './item-comment.service'
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-user-item',
@@ -8,9 +10,11 @@ import {MatDialogRef} from '@angular/material';
   styleUrls: ['./user-item.component.css']
 })
 export class UserItemComponent implements OnInit {
-  showCommentField;
-  starRating;
-  constructor(public thisDialogRef: MatDialogRef<UserItemComponent>, @Inject(MAT_DIALOG_DATA) public data: string) { this.showCommentField=false;}
+  showCommentFSield;
+  numbers;
+  constructor(public thisDialogRef: MatDialogRef<UserItemComponent>, @Inject(MAT_DIALOG_DATA) public data, private commentService : ItemCommentService) { this.showCommentField=false;
+    this.numbers = Array(this.data.item.comments.length).fill().map((x,i)=>i);
+  }
   ngOnInit() {
   }
   title = 'Rating';  
@@ -38,8 +42,15 @@ export class UserItemComponent implements OnInit {
     }
   }
   
-  submitComment(){
-    
+  submitComment(comment){
+   
+    var user = firebase.auth().currentUser;
+    this.commentService.addItemComment(this.data.item,comment,this.rating,user)
+    .then(res => {
+      console.log(res);
+  }, err => {
+      console.log(err);
+    });
   }
   onCloseConfirm() {
     this.thisDialogRef.close('Confirm');
