@@ -12,8 +12,17 @@ import * as firebase from 'firebase/app';
 export class UserItemComponent implements OnInit {
   showCommentField;
   numbers;
-  constructor(public thisDialogRef: MatDialogRef<UserItemComponent>, @Inject(MAT_DIALOG_DATA) public data, private commentService : ItemCommentService) { this.showCommentField=false;
+  firstFive;
+  constructor(public thisDialogRef: MatDialogRef<UserItemComponent>, @Inject(MAT_DIALOG_DATA) public data, private commentService : ItemCommentService) { 
+    this.showCommentField=false;
     this.numbers = Array(this.data.item.comments.length).fill().map((x,i)=>i);
+    if(this.numbers.length>5){
+      this.firstFive=this.numbers.slice(this.numbers.length-5, this.numbers,length);
+    }
+    else{
+      this.firstFive=this.numbers;
+    }
+    
   }
   ngOnInit() {
   }

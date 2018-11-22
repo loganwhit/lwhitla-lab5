@@ -15,6 +15,7 @@ export class StartComponent implements OnInit {
   private itemArr;
   showMore;
   dialogResult;
+  private tempArr;
   
 
   constructor(public dialog: MatDialog, private startServ: StartService) {
@@ -41,8 +42,34 @@ export class StartComponent implements OnInit {
     }, err => {
       console.log(err);
     });
+    setInterval(this.reload.bind(this),5000);
     
+   }
+   
+   reload(){
+     var unsortedItems;
     
+     this.tempArr=[];
+    unsortedItems = this.startServ.getAll()
+    .then(res => {
+      console.log(res);
+      for(var x in res){
+        
+      
+      this.tempArr.push(res[x]);
+    }
+    try{
+      
+    this.sortItems(this.tempArr);
+    }
+    catch(err){
+      console.log(err);
+    }
+      
+    }, err => {
+      console.log(err);
+    });
+     
    }
 
   ngOnInit() {
@@ -55,6 +82,7 @@ export class StartComponent implements OnInit {
       this.showMore=true;
     }
   }
+  
   sortItems(itemList){
     
     itemList.sort(function(a,b){
@@ -62,9 +90,15 @@ export class StartComponent implements OnInit {
       return parseInt(a.itemsSold)-parseInt(b.itemsSold);
     })
     itemList=itemList.reverse();
+    if (this.itemArr==itemList){
+     return;
+   }
+   else{
+   this.items=[];
     this.itemArr=itemList;
     for (var i=0; i<11&&i<itemList.length; i++){
       this.items.push(itemList[i]);
+    }
 
     }
 
@@ -73,9 +107,7 @@ export class StartComponent implements OnInit {
     
     let dialogRef = this.dialog.open(StartItemComponent, {
       width: '600px',
-      data: {item: item
-        
-      },
+      data: {item: item}
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog closed: ${result}`);

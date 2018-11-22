@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {StartService} from '../start/start.service';
 import {UserItemComponent} from '../user-item/user-item.component';
+import {UserService} from '../core/user.service';
 
 
 
@@ -19,12 +20,14 @@ export class UserComponent implements OnInit {
   dialogResult;
   items;
   private itemArr;
+  private tempArr;
   showMore;
 
   constructor(
     public dialog: MatDialog, private startServ: StartService,
     private router: Router,
     public authService: AuthService,
+    private userService: UserService,
     private route: ActivatedRoute,
     private location : Location,
     private fb: FormBuilder) {
@@ -51,11 +54,40 @@ export class UserComponent implements OnInit {
     }, err => {
       console.log(err);
     });
+    setInterval(this.reload.bind(this),5000);
     }
 
   ngOnInit() {
+    // if(this.userService.getCurrentUser()){
+    //   this.router.navigate(['/login']);
+    // }
 
   }
+  reload(){
+     var unsortedItems;
+     
+     this.tempArr=[];
+    unsortedItems = this.startServ.getAll()
+    .then(res => {
+      console.log(res);
+      for(var x in res){
+        
+      
+      this.tempArr.push(res[x]);
+    }
+    try{
+      
+    this.sortItems(this.tempArr);
+    }
+    catch(err){
+      console.log(err);
+    }
+      
+    }, err => {
+      console.log(err);
+    });
+     
+   }
   showOrHide(){
     if(this.showMore==true){
       this.showMore=false;
@@ -71,10 +103,15 @@ export class UserComponent implements OnInit {
       return parseInt(a.itemsSold)-parseInt(b.itemsSold);
     })
     itemList=itemList.reverse();
+    if (this.itemArr==itemList){
+     return;
+   }
+   else{
+   this.items=[];
     this.itemArr=itemList;
     for (var i=0; i<11&&i<itemList.length; i++){
       this.items.push(itemList[i]);
-
+}
     }
 
   }
@@ -92,14 +129,16 @@ export class UserComponent implements OnInit {
     
     let dialogRef = this.dialog.open(UserItemComponent, {
       width: '600px',
-      data: {item : item
-        
-      },
+      data: {item : item}
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog closed: ${result}`);
       this.dialogResult = result;
     });
+  
 
+}
+addCart(quant,item){
+  
 }
 }

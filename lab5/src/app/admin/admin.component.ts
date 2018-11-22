@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AdminService} from './admin.service'
 import {AuthService} from '../core/auth.service'
 import {Router} from '@angular/router';
+import {UserService} from '../core/user.service';
 
 @Component({
   selector: 'app-admin',
@@ -12,12 +13,16 @@ import {Router} from '@angular/router';
 export class AdminComponent implements OnInit {
   addItem: FormGroup;
   constructor(private fb: FormBuilder,
+  private userService: UserService,
   private router: Router,
   private adminServ : AdminService,
   private authService: AuthService) {
        this.createForm() }
 
   ngOnInit() {
+    // if(this.userService.getCurrentUser()){
+    //   this.router.navigate(['/login']);
+    // }
   }
   createForm(){
     this.addItem = this.fb.group({

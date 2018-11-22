@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ItemCommentService {
-  const url = './api/items/comment/';
+  url = './api/items/comment/';
   
   constructor() { }
   

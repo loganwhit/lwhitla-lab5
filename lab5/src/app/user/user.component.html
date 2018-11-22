@@ -6,12 +6,25 @@
 </nav>
 
 
-
+<h2>Catalog </h2>
 <div *ngIf="!showMore">
     <mat-list>
+        <mat-list-item>
+            <p class="name">Name</p>
+             <p class="price">Price</p>
+            <p class="quantity">Quantity</p>
+           
+        </mat-list-item>
         <mat-list-item *ngFor="let item of items"> 
        <!--<a routerLink {{item.name}} -->
-       <a (click)="openDialog(item)">{{item.name}}</a>
+       <a class="name" (click)="openDialog(item)">{{item.name}}</a>
+        <p class="price" >${{item.price}}</p>
+       <input class="quantity" matInput #quant type="number" value=1>
+       
+      
+      
+       
+       <button class="cartButton" (click)="addCart(quant,item)">Add to Cart</button>
         </mat-list-item>
     </mat-list>
     <div *ngIf="!(itemArr.length<11)">
@@ -29,4 +42,8 @@
     <div *ngIf="itemArr.length>10">
     <button mat-button (click) = showOrHide()>Hide</button>
     </div>
+    </div>
+    
+    <div id="cart">
+        
     </div>

@@ -13,11 +13,11 @@ import {ProfileComponent} from './profile/profile.component';
 const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
   {path: 'start', component: StartComponent},
-  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
-  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'user', component: UserComponent },
   { path: 'admin', component: AdminComponent},
-  { path: 'profile', component: ProfileComponent, resolve: { data: UserResolver}}
+  { path: 'profile', component: ProfileComponent,  resolve: { data: UserResolver}}
 ];
 
 @NgModule({

@@ -23,6 +23,9 @@ export class ProfileComponent implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit() {
+    // if(this.userService.getCurrentUser()){
+    //   this.router.navigate(['/login']);
+    // }
     this.route.data.subscribe(routeData => {
     let data = routeData['data'];
     if (data) {
