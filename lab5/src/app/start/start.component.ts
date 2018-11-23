@@ -90,7 +90,7 @@ export class StartComponent implements OnInit {
       return parseInt(a.itemsSold)-parseInt(b.itemsSold);
     })
     itemList=itemList.reverse();
-    if (this.itemArr==itemList){
+    if (this.itemArr==itemList && this.items.length!==0){
      return;
    }
    else{

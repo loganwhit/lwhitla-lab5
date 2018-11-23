@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA} from '@angular/material';
 import {MatDialogRef} from '@angular/material';
 import {ItemCommentService} from './item-comment.service'
 import * as firebase from 'firebase/app';
+import {CartService} from '../cart/cart.service';
 
 @Component({
   selector: 'app-user-item',
@@ -13,9 +14,12 @@ export class UserItemComponent implements OnInit {
   showCommentField;
   numbers;
   firstFive;
-  constructor(public thisDialogRef: MatDialogRef<UserItemComponent>, @Inject(MAT_DIALOG_DATA) public data, private commentService : ItemCommentService) { 
+  constructor(public thisDialogRef: MatDialogRef<UserItemComponent>, 
+  @Inject(MAT_DIALOG_DATA) public data, 
+  private commentService : ItemCommentService,
+  private cartService : CartService) { 
     this.showCommentField=false;
-    this.numbers = Array(this.data.item.comments.length).fill().map((x,i)=>i);
+    this.numbers = Array(this.data.item.comments.length).fill(1).map((x,i)=>i);
     if(this.numbers.length>5){
       this.firstFive=this.numbers.slice(this.numbers.length-5, this.numbers,length);
     }
@@ -50,6 +54,7 @@ export class UserItemComponent implements OnInit {
       this.showCommentField=false;
     }
   }
+
   
   submitComment(comment){
    
@@ -67,5 +72,14 @@ export class UserItemComponent implements OnInit {
   onCloseCancel() {
     this.thisDialogRef.close('Cancel');
   }
+  addCart(item, quant){
+  this.cartService.addToCart(item,quant)
+    .then(res => {
+      console.log(res);
+  }, err => {
+      console.log(err);
+    });
+  
+}
  
 }

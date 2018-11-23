@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot,Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { UserService } from '../core/user.service';
+import { UserService } from './user.service';
 import { Observable } from 'rxjs';
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +12,29 @@ export class AuthGuard implements CanActivate {
   constructor(
     public afAuth: AngularFireAuth,
     public userService: UserService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
+    
   ) {}
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      return new Promise((resolve, reject) => {
-        this.userService.getCurrentUser()
-        .then(user => {
-          this.router.navigate(['/user']);
-          return resolve(false);
-        }, err => {
-          return resolve(true);
-        })
-      })
-  }
+    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean { //https://itnext.io/step-by-step-complete-firebase-authentication-in-angular-2-97ca73b8eb32
+   
+        if ( this.authService.isLoggedIn() ) {
+            return true;
+        }
+        this.router.navigate(['/login']);
+        return false;
+    
+      }
+      // return new Promise((resolve, reject) => {
+      //   this.userService.getCurrentUser()
+      //   .then(user => {
+      //     return resolve(false);
+      //   }, err => {
+      //   this.router.navigate['/login'];
+      //     return resolve(true);
+      //   })
+      // })
+  
 }

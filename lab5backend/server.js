@@ -145,6 +145,24 @@ router.route('/items/comment/:item_id')
         });
         
     })
+    router.route('/items/cart/:item_id')
+.put(function(req,res){
+        Item.findById(req.params.item_id, function(err,item){
+            if(err){
+                res.send(err);
+            }
+            if(req.body.quantity != undefined){
+            item.quantity = item.quantity+req.body.quantity;
+            }
+            item.save(function(err){
+                if(err){
+                    res.send(err);
+                }
+                res.json({message: 'Item updated'});
+            });
+        });
+        
+    })
 
 //Start server
 app.listen(port);

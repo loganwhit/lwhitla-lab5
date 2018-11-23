@@ -1,0 +1,27 @@
+<nav  mat-tab-nav-bar>
+    <a mat-tab-link routerLink="/user">Home</a>
+    <a mat-tab-link routerLink="/admin">Admin</a>
+    <a mat-tab-link routerLink="/profile">Profile</a>
+    <a mat-tab-link id="logoutNavButton" (click)="logout()" routerLink="/start">Logout</a>
+</nav>
+
+<h2>Cart </h2>
+<div>
+    
+    <mat-list>
+        <mat-list-item>
+            <p class="name">Name</p>
+             <p class="price">Price</p>
+            <p class="quantity">Quantity</p>
+        </mat-list-item>
+        <mat-list-item *ngFor="let item of cartList"> 
+       <!--<a routerLink {{item.name}} -->
+       <p class="name">{{item.name}}</p>
+        <p class="price" >${{item.price}}</p>
+       <input mat-input type="number" #quant mat-input *ngValue='item.quantity' class="quantity" ngChange=inputChange(item,quant.value)>
+       <button mat-raised-button (click)=removeItem(item,item.quantity)> Remove Item</button>
+       </mat-list-item>
+       </mat-list>
+   
+      </div>
+    <button mat-raised-button (click)=clearItems() >Clear Cart</button>

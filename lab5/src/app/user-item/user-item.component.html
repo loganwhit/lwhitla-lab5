@@ -7,7 +7,7 @@
       <p class="price" >${{data.item.price}}</p>
       <input class="quantity" matInput #quant type="number" value=1>
 
-       <button class="cartButton" (click)="addCart(quant,item)">Add to Cart</button>
+       <button mat-raised-button class="cartButton" (click)="addCart(data.item, quant.value)">Add to Cart</button>
        </mat-list-item>
  </mat-list>
   <label>Description</label>

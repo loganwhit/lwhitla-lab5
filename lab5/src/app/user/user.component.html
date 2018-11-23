@@ -2,6 +2,7 @@
     <a mat-tab-link routerLink="/user">Home</a>
     <a mat-tab-link routerLink="/admin">Admin</a>
     <a mat-tab-link routerLink="/profile">Profile</a>
+    <a mat-tab-link routerLink="/cart">Cart</a>
     <a mat-tab-link id="logoutNavButton" (click)="logout()" routerLink="/start">Logout</a>
 </nav>
 
@@ -19,12 +20,10 @@
        <!--<a routerLink {{item.name}} -->
        <a class="name" (click)="openDialog(item)">{{item.name}}</a>
         <p class="price" >${{item.price}}</p>
-       <input class="quantity" matInput #quant type="number" value=1>
+        <p class="quantityRem">{{item.quantity}}</p>
+       <input class="quantity" matInput #quant type='number' value=1>
        
-      
-      
-       
-       <button class="cartButton" (click)="addCart(quant,item)">Add to Cart</button>
+       <button mat-raised-button class="cartButton" (click)="addCart(item, quant.value)">Add to Cart</button>
         </mat-list-item>
     </mat-list>
     <div *ngIf="!(itemArr.length<11)">
@@ -44,6 +43,4 @@
     </div>
     </div>
     
-    <div id="cart">
-        
-    </div>
+   

@@ -7,10 +7,26 @@ import * as firebase from 'firebase/app';
   providedIn: 'root'
 })
 export class AuthService {
+  private user;
+  private userDetails;
 
   constructor(
     public afAuth: AngularFireAuth
-  ){}
+  ){
+    this.user= afAuth.authState;
+    
+    this.user.subscribe( //https://itnext.io/step-by-step-complete-firebase-authentication-in-angular-2-97ca73b8eb32
+        (user) => {
+          if (user) {
+            this.userDetails = user;
+            console.log(this.userDetails);
+          }
+          else {
+            this.userDetails = null;
+          }
+        }
+      );
+  }
   doRegister(value){
     return new Promise<any>((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
@@ -24,6 +40,13 @@ export class AuthService {
       }, err => reject(err))
       
     })
+  }
+  isLoggedIn() {
+  if (this.userDetails == null ) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   doLogin(value){

@@ -24,6 +24,8 @@ import { AdminComponent } from './admin/admin.component';
 import { ProfileComponent } from './profile/profile.component';
 import { StartItemComponent } from './start-item/start-item.component';
 import { UserItemComponent } from './user-item/user-item.component';
+import { CartComponent } from './cart/cart.component';
+
 
 
 
@@ -38,6 +40,8 @@ import { UserItemComponent } from './user-item/user-item.component';
     ProfileComponent,
     StartItemComponent,
     UserItemComponent,
+    CartComponent,
+    
   
   ],
   imports: [

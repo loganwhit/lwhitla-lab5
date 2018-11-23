@@ -10,7 +10,7 @@ export class StartItemComponent implements OnInit {
   numbers;
   firstFive;
   constructor(public thisDialogRef: MatDialogRef<StartItemComponent>, @Inject(MAT_DIALOG_DATA) public data) {
-    this.numbers = Array(this.data.item.comments.length).fill().map((x,i)=>i);
+    this.numbers = Array(this.data.item.comments.length).fill(1).map((x,i)=>i);
     if(this.numbers.length>5){
       this.firstFive=this.numbers.slice(this.numbers.length-5, this.numbers,length);
     }

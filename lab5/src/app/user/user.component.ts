@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {StartService} from '../start/start.service';
 import {UserItemComponent} from '../user-item/user-item.component';
 import {UserService} from '../core/user.service';
+import {CartService} from '../cart/cart.service';
 
 
 
@@ -30,8 +31,9 @@ export class UserComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private location : Location,
-    private fb: FormBuilder) {
-      this.showMore=false;
+    private fb: FormBuilder,
+    private cartService : CartService) {
+    this.showMore=false;
     this.itemArr=[];
     this.items=[];
     var unsortedItems;
@@ -54,7 +56,7 @@ export class UserComponent implements OnInit {
     }, err => {
       console.log(err);
     });
-    setInterval(this.reload.bind(this),5000);
+    //setInterval(this.reload.bind(this),5000);
     }
 
   ngOnInit() {
@@ -63,31 +65,31 @@ export class UserComponent implements OnInit {
     // }
 
   }
-  reload(){
-     var unsortedItems;
+  // reload(){
+  //   var unsortedItems;
      
-     this.tempArr=[];
-    unsortedItems = this.startServ.getAll()
-    .then(res => {
-      console.log(res);
-      for(var x in res){
+  //   this.tempArr=[];
+  //   unsortedItems = this.startServ.getAll()
+  //   .then(res => {
+  //     console.log(res);
+  //     for(var x in res){
         
       
-      this.tempArr.push(res[x]);
-    }
-    try{
+  //     this.tempArr.push(res[x]);
+  //   }
+  //   try{
       
-    this.sortItems(this.tempArr);
-    }
-    catch(err){
-      console.log(err);
-    }
+  //   this.sortItems(this.tempArr);
+  //   }
+  //   catch(err){
+  //     console.log(err);
+  //   }
       
-    }, err => {
-      console.log(err);
-    });
+  //   }, err => {
+  //     console.log(err);
+  //   });
      
-   }
+  // }
   showOrHide(){
     if(this.showMore==true){
       this.showMore=false;
@@ -103,11 +105,11 @@ export class UserComponent implements OnInit {
       return parseInt(a.itemsSold)-parseInt(b.itemsSold);
     })
     itemList=itemList.reverse();
-    if (this.itemArr==itemList){
+    if (this.itemArr==itemList && this.items.length!==0){
      return;
    }
    else{
-   this.items=[];
+    this.items=[];
     this.itemArr=itemList;
     for (var i=0; i<11&&i<itemList.length; i++){
       this.items.push(itemList[i]);
@@ -138,7 +140,13 @@ export class UserComponent implements OnInit {
   
 
 }
-addCart(quant,item){
+addCart(item, quant){
+  this.cartService.addToCart(item,quant)
+    .then(res => {
+      console.log(res);
+  }, err => {
+      console.log(err);
+    });
   
 }
 }
