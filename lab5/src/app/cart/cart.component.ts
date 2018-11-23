@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 })
 export class CartComponent implements OnInit {
   cartList;
+  lastChange;
+ 
 
   constructor(private cartService : CartService, private authService: AuthService, private router : Router) {this.cartList=this.cartService.getCart(); }
 
@@ -18,12 +20,18 @@ export class CartComponent implements OnInit {
   getCart(){
     this.cartList=this.cartService.getCart();
   }
-  inputChange(cartItem, quant){
-    if(quant>cartItem.quantity){
-      this.addCart(cartItem, parseInt(quant)-cartItem.quantity);
+  inputChange(quant, cartItem){
+    var val = quant.target.value;
+    if(this.lastChange==parseInt(val)){
+      return;
     }
-    else if (quant<cartItem.quantity){
-      this.removeItem(cartItem, cartItem.quantity-parseInt(quant));
+    console.log(parseInt(val));
+    this.lastChange=parseInt(val);
+    if(val>cartItem.quantity){
+      this.addCart(cartItem, parseInt(val)-cartItem.quantity);
+    }
+    else if (val<cartItem.quantity){
+      this.removeItem(cartItem, cartItem.quantity-parseInt(val));
     }
       
     

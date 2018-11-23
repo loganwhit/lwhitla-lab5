@@ -61,9 +61,14 @@ export class CartService {
     
     var id =cartItem._id;
     var itemUrl = this.url+id;
+    
     if(quant==cartItem.quantity){
       this.cartList.splice(this.cartList.indexOf(cartItem),1);
       }
+    else {
+      cartItem.quantity -= parseInt(quant);
+    }
+    
     
    
     
