@@ -18,7 +18,7 @@
        <!--<a routerLink {{item.name}} -->
        <p class="name">{{item.name}}</p>
         <p class="price" >${{item.price}}</p>
-       <input mat-input type="number" #quant mat-input *ngValue='item.quantity' class="quantity" ngChange=inputChange(item,quant.value)>
+       <input mat-input type="number" #quant mat-input [(ngModel)]="item.quantity" class="quantity" ngChange=inputChange(item,quant.value)>
        <button mat-raised-button (click)=removeItem(item,item.quantity)> Remove Item</button>
        </mat-list-item>
        </mat-list>
