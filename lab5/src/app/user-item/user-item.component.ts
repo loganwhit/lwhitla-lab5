@@ -4,6 +4,7 @@ import {MatDialogRef} from '@angular/material';
 import {ItemCommentService} from './item-comment.service'
 import * as firebase from 'firebase/app';
 import {CartService} from '../cart/cart.service';
+import {UserComponent} from '../user/user.component';
 
 @Component({
   selector: 'app-user-item',
@@ -29,6 +30,15 @@ export class UserItemComponent implements OnInit {
     
   }
   ngOnInit() {
+  }
+  reload(){
+    this.numbers = Array(this.data.item.comments.length).fill(1).map((x,i)=>i);
+    if(this.numbers.length>5){
+      this.firstFive=this.numbers.slice(this.numbers.length-5, this.numbers,length);
+    }
+    else{
+      this.firstFive=this.numbers;
+    }
   }
   title = 'Rating';  
   starList: boolean[] = [true,true,true,true,true];       // create a list which contains status of 5 stars
@@ -62,6 +72,8 @@ export class UserItemComponent implements OnInit {
     this.commentService.addItemComment(this.data.item,comment,this.rating,user)
     .then(res => {
       console.log(res);
+      this.data.component.reload();
+      this.reload();
   }, err => {
       console.log(err);
     });
@@ -76,6 +88,7 @@ export class UserItemComponent implements OnInit {
   this.cartService.addToCart(item,quant)
     .then(res => {
       console.log(res);
+      this.data.component.reload();
   }, err => {
       console.log(err);
     });

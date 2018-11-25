@@ -10,23 +10,54 @@ import { Router } from '@angular/router';
 })
 export class CartComponent implements OnInit {
   cartList;
-  lastChange;
+  // lastChange;
+  numbers;
+  minusTen;
+  sumTotal;
  
 
-  constructor(private cartService : CartService, private authService: AuthService, private router : Router) {this.cartList=this.cartService.getCart(); }
+  constructor(private cartService : CartService, private authService: AuthService, private router : Router) {this.cartList=this.cartService.getCart();
+  this.numbers = Array(10).fill(1).map((x,i)=>i);
+    this.minusTen=true;
+    
+    this.getSum();
+    
+  }
+  getSum(){
+    this.sumTotal=0;
+    for (var i=0; i<this.cartList.length; i++){
+      this.sumTotal += parseFloat(this.cartList[i].quantity)*parseFloat(this.cartList[i].price); 
+    }
+  }
+  buy(){
+    this.cartService.buy()
+    .then(res => {
+      console.log(res);
+      this.cartList=this.cartService.getCart();
+      this.sumTotal=0;
+      
+      
+  }, err => {
+      console.log(err);
+    });
+    
+  }
 
   ngOnInit() {
   }
   getCart(){
     this.cartList=this.cartService.getCart();
   }
+  switchInput(){
+    this.minusTen=false;
+  }
   inputChange(quant, cartItem){
-    var val = quant.target.value;
-    if(this.lastChange==parseInt(val)){
-      return;
-    }
+    var val = quant;
+    // if(this.lastChange==parseInt(val)){
+    //   return;
+    // }
     console.log(parseInt(val));
-    this.lastChange=parseInt(val);
+    // this.lastChange=parseInt(val);
     if(val>cartItem.quantity){
       this.addCart(cartItem, parseInt(val)-cartItem.quantity);
     }
@@ -41,6 +72,8 @@ export class CartComponent implements OnInit {
     .then(res => {
       console.log(res);
       this.getCart();
+       this.getSum();
+      
   }, err => {
       console.log(err);
     });
@@ -48,7 +81,7 @@ export class CartComponent implements OnInit {
   logout(){
     this.authService.doLogout()
     .then((res) => {
-     
+     this.clearItems();
       this.router.navigate(['/start']);
     }, (error) => {
       console.log("Logout error", error);
@@ -63,10 +96,11 @@ export class CartComponent implements OnInit {
     }
   }
   addCart(cartItem, quant){
-  this.cartService.addToCart(cartItem,quant)
+  this.cartService.incrementCart(cartItem,quant)
     .then(res => {
       console.log(res);
       this.getCart();
+       this.getSum();
   }, err => {
       console.log(err);
     });

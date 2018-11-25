@@ -163,6 +163,47 @@ router.route('/items/comment/:item_id')
         });
         
     })
+router.route('/items/cartBuy/buy')
+.put((req,res)=>{
+    
+    for(var i =0; i<req.body.cart.length; i++){
+        Item.findByIdAndUpdate(req.body.cart[i]._id, { itemsSold: req.body.cart[i].itemsSold }, function(err,item){
+            if(err){
+                res.send(err);
+            }
+            item.save(function(err){
+                if(err){
+                    res.send(err);
+                }
+                
+            });
+        });
+        // Item.findById(req.body.cart[i]._id,(err,item)=>{
+        //     if(err){
+        //         res.send(err);
+        //     }
+        //     item.itemsSold+=req.body.cart[i].quantity;
+            
+        //     item.save(function(err){
+        //         if(err){
+        //             res.send(err);
+        //         }
+        //         res.json({message: 'Item updated'});
+        //     });
+        // });
+        // var item=Item.findById(req.body[i]._id);
+        // item.itemsSold+=req.body[i].quantity;
+        // item.save(function(err){
+        //         if(err){
+        //             res.send(err);
+        //         }
+        //         res.json({message: 'Item updated'});
+        //     });
+    // }
+    }
+    res.json({message: 'Items updated'});
+        
+    })
 
 //Start server
 app.listen(port);

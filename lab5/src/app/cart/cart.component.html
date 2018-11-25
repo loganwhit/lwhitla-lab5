@@ -18,10 +18,34 @@
        <!--<a routerLink {{item.name}} -->
        <p class="name">{{item.name}}</p>
         <p class="price" >${{item.price}}</p>
-       <input mat-input type="number" #quant mat-input [value]="item.quantity" class="quantity" (change)="inputChange($event,item)" onkeydown="return false">
+        <div *ngIf="minusTen&&item.quantity<10" >
+        <mat-form-field class="quantity">
+            <!--(change)="inputChange($event,item)"-->
+          <mat-select [value]="item.quantity"  class="quantitySel"> 
+              
+            <mat-option class="quantityItem" *ngFor="let number of numbers" [value]="number" (click)="inputChange(number,item)" >
+                {{number}}
+            </mat-option>
+            <mat-option class="quantityItem" value="10+"  (click)="switchInput()">
+                10+
+            </mat-option>
+            
+          </mat-select>
+        </mat-form-field>
+        </div>
+        <div *ngIf="!minusTen||item.quantity>10">
+            <input mat-input type="number" #quant mat-input [value]="item.quantity" class="inputQuantity"  >
+            <a  class="quantity" (click)="inputChange(quant.value,item)">Update</a>
+        </div>
+       <!--<input mat-input type="number" #quant mat-input [value]="item.quantity" class="quantity" (change)="inputChange($event,item)" onkeydown="return false">-->
+       <strong id="total" class = "total">${{item.price*item.quantity}}</strong> 
        <button mat-raised-button (click)=removeItem(item,item.quantity)> Remove Item</button>
        </mat-list-item>
        </mat-list>
    
       </div>
+      <hr>
+
     <button mat-raised-button (click)=clearItems() >Clear Cart</button>
+    <strong>Total: ${{sumTotal}}</strong>
+    <button mat-raised-button (click)=buy()> Buy</button>

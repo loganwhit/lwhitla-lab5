@@ -42,7 +42,7 @@ export class StartComponent implements OnInit {
     }, err => {
       console.log(err);
     });
-    setInterval(this.reload.bind(this),5000);
+    // setInterval(this.reload.bind(this),5000);
     
    }
    

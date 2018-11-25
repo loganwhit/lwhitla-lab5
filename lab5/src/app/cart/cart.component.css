@@ -4,12 +4,29 @@
 }
 .quantity{
    margin-right: 20px;
+    width: 30px;
+}
+.inputQuantity{
+   margin-right: 20px;
     width: 50px;
+}
+.quantitySel{
+  
+    width: 30px;
+}
+.quantityItem{
+    font-size: 20px;
+    height:10px;
+    
 }
 .name{
     width: 150px;
 }
 .price{
+    
+    width: 100px;
+}
+.total{
     
     width: 100px;
 }

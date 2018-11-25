@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import * as firebase from 'firebase/app';
+
 
 
 
@@ -8,6 +10,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  // const firestore = firebase.firestore();
+  // const settings = {timestampsInSnapshots: true};
+  // firestore.settings(settings);
   title = "Welcome to Log's Goods";
  
 }

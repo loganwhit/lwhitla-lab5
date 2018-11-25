@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service'
 import { Router, Params } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import {UserService} from '../core/user.service'
+import {UserService} from '../core/user.service';
+import {AuthService} from '../core/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -42,6 +43,7 @@ export class LoginComponent implements OnInit {
 
       this.userService.updateCurrentUser(data);
       }
+     
       
       
       this.router.navigate(['/user']);

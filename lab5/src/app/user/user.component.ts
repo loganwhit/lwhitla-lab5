@@ -8,6 +8,9 @@ import {StartService} from '../start/start.service';
 import {UserItemComponent} from '../user-item/user-item.component';
 import {UserService} from '../core/user.service';
 import {CartService} from '../cart/cart.service';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import {AuthService} from '../core/auth.service';
+
 
 
 
@@ -17,12 +20,13 @@ import {CartService} from '../cart/cart.service';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  
+  modalItem;
   dialogResult;
   items;
   private itemArr;
   private tempArr;
   showMore;
+  private user;
 
   constructor(
     public dialog: MatDialog, private startServ: StartService,
@@ -33,9 +37,17 @@ export class UserComponent implements OnInit {
     private location : Location,
     private fb: FormBuilder,
     private cartService : CartService) {
+    this.user = userService.getCurrentUser()
+    .then(res => {
+      this.authService.addUser(res);
+    }, err => {
+      console.log(err);
+    });
+    
     this.showMore=false;
     this.itemArr=[];
     this.items=[];
+    
     var unsortedItems;
     unsortedItems = this.startServ.getAll()
     .then(res => {
@@ -65,31 +77,31 @@ export class UserComponent implements OnInit {
     // }
 
   }
-  // reload(){
-  //   var unsortedItems;
+  reload(){
+    var unsortedItems;
      
-  //   this.tempArr=[];
-  //   unsortedItems = this.startServ.getAll()
-  //   .then(res => {
-  //     console.log(res);
-  //     for(var x in res){
+    this.tempArr=[];
+    unsortedItems = this.startServ.getAll()
+    .then(res => {
+      console.log(res);
+      for(var x in res){
         
       
-  //     this.tempArr.push(res[x]);
-  //   }
-  //   try{
+      this.tempArr.push(res[x]);
+    }
+    try{
       
-  //   this.sortItems(this.tempArr);
-  //   }
-  //   catch(err){
-  //     console.log(err);
-  //   }
+    this.sortItems(this.tempArr);
+    }
+    catch(err){
+      console.log(err);
+    }
       
-  //   }, err => {
-  //     console.log(err);
-  //   });
+    }, err => {
+      console.log(err);
+    });
      
-  // }
+  }
   showOrHide(){
     if(this.showMore==true){
       this.showMore=false;
@@ -127,11 +139,22 @@ export class UserComponent implements OnInit {
       console.log("Logout error", error);
     });
   }
+  // observable = Observable;
+  // observer = {
+  //   next: (value) => {
+      
+  //     this.modalItem = value;
+  //     this.modalItem$.next(value);
+  //   }
+  // }
+  // subscription = this.observable.subscribe(this.observer);
   openDialog(item) {
-    
+    this.modalItem=item;
     let dialogRef = this.dialog.open(UserItemComponent, {
       width: '600px',
-      data: {item : item}
+      data: {item : item,
+        component: this
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog closed: ${result}`);
@@ -144,6 +167,7 @@ addCart(item, quant){
   this.cartService.addToCart(item,quant)
     .then(res => {
       console.log(res);
+      this.reload();
   }, err => {
       console.log(err);
     });

@@ -13,6 +13,7 @@ import {MatMenuModule, MatToolbarModule, MatCardModule, MatButtonToggleModule,Ma
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
 import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
@@ -25,6 +26,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { StartItemComponent } from './start-item/start-item.component';
 import { UserItemComponent } from './user-item/user-item.component';
 import { CartComponent } from './cart/cart.component';
+import {MatSelectModule} from '@angular/material/select';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 
 
@@ -41,6 +44,7 @@ import { CartComponent } from './cart/cart.component';
     StartItemComponent,
     UserItemComponent,
     CartComponent,
+   
     
   
   ],
@@ -61,10 +65,13 @@ import { CartComponent } from './cart/cart.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
     ReactiveFormsModule,
     MatListModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    MatSelectModule
    
   ],
   entryComponents:[StartItemComponent, UserItemComponent],
