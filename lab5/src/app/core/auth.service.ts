@@ -54,7 +54,7 @@ export class AuthService {
   const settings = {timestampsInSnapshots: true};
   this.db.settings(settings);
     var collection = this.db.collection("users");
-    collection.doc(userResp.user.uid).set({
+    collection.doc(userResp.uid).set({
       isAdmin : false
         })
         .then(function() {
@@ -64,6 +64,13 @@ export class AuthService {
             console.error("Error writing document: ", error);
         });
         
+  }
+  getUser(userResp){
+    const settings = {timestampsInSnapshots: true};
+  this.db.settings(settings);
+  var collection = this.db.collection("users");
+  return collection.doc(userResp.uid);
+  
   }
   doRegister(value){
     return new Promise<any>((resolve, reject) => {

@@ -27,6 +27,7 @@ export class UserComponent implements OnInit {
   private tempArr;
   showMore;
   private user;
+  
 
   constructor(
     public dialog: MatDialog, private startServ: StartService,
@@ -37,9 +38,21 @@ export class UserComponent implements OnInit {
     private location : Location,
     private fb: FormBuilder,
     private cartService : CartService) {
+    
     this.user = userService.getCurrentUser()
     .then(res => {
-      this.authService.addUser(res);
+      var docRef = authService.getUser(res);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+        } else {
+            authService.addUser(res);
+            console.log("No such document!");
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
+      
     }, err => {
       console.log(err);
     });
