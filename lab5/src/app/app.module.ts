@@ -18,7 +18,8 @@ import { environment } from '../environments/environment';
 import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthGuard } from './core/auth.guard'
+import { AuthGuard } from './core/auth.guard';
+import {AdminGuard} from './core/admin.guard';
 import {UserResolver} from './user/user.resolver';
 import { StartComponent } from './start/start.component';
 import { AdminComponent } from './admin/admin.component';
@@ -76,7 +77,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
   ],
   entryComponents:[StartItemComponent, UserItemComponent],
 
-  providers: [AuthGuard,UserResolver],
+  providers: [AuthGuard,UserResolver,AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

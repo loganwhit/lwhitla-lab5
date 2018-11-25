@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 import {AuthGuard} from './core/auth.guard';
+import {AdminGuard} from './core/admin.guard';
 import { UserResolver } from './user/user.resolver';
 import {StartComponent} from './start/start.component';
 import {AdminComponent} from './admin/admin.component';
@@ -17,7 +18,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
+  { path: 'admin', component: AdminComponent, canActivate: [AdminGuard]},
   { path: 'cart' , component: CartComponent, canActivate:[AuthGuard]},
   { path: 'profile', component: ProfileComponent,  resolve: { data: UserResolver}}
 ];
