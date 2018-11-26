@@ -9,17 +9,17 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(express.static('./public'));
 
-var admin = require('firebase-admin');
+// var admin = require('firebase-admin');
 
-var serviceAccount = require('./firebase/se3316-lab5-auth-firebase-adminsdk-h9mgr-f7f01fbb2c.json');
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://se3316-lab5-auth.firebaseio.com"
-});
+// var serviceAccount = require('./firebase/se3316-lab5-auth-firebase-adminsdk-h9mgr-f7f01fbb2c.json');
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://se3316-lab5-auth.firebaseio.com"
+// });
 
-var defaultApp = admin.initializeApp(defaultAppConfig);
+// var defaultApp = admin.initializeApp(defaultAppConfig);
 
-console.log(defaultApp.name);
+// console.log(defaultApp.name);
 
 var port = process.env.Port || 8081;
 

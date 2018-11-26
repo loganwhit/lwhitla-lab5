@@ -57,7 +57,8 @@ export class AuthService {
     collection.doc(userResp.uid).set({
       isAdmin : false,
       email: userResp.email,
-      displayName: userResp.displayName
+      displayName: userResp.displayName,
+      active: true
         })
         .then(function() {
             console.log("Document successfully written!");
@@ -73,6 +74,18 @@ export class AuthService {
   var collection = this.db.collection("users");
   return collection.doc(userResp.uid);
   
+  }
+  getUserPromise(uid){
+    return new Promise<any>((resolve, reject) => {
+      const settings = {timestampsInSnapshots: true};
+      this.db.settings(settings);
+      var collection = this.db.collection("users");
+      var userRef = collection.doc(uid);
+      resolve(userRef);
+      
+      
+    }
+    
   }
   getAllUsers(){
     const settings = {timestampsInSnapshots: true};
@@ -120,13 +133,30 @@ export class AuthService {
       firebase.auth().signInWithEmailAndPassword(value.email, value.password)
       .then(res => {
         var user=firebase.auth().currentUser;
-        resolve(res);
+        var resHold= res;
+        
         if(!user.emailVerified){
           this.doLogout();
-          
-
-
         }
+        var ref = this.getUser(user);
+        ref.get().then(function(res){
+          
+           if(res.exists){
+            if(!(res.data().active)){
+            alert("User is disabled");
+            this.doLogout();
+          }
+          else{
+            resolve(resHold);
+          }
+          
+        }
+        else{
+          resolve(resHold);
+        }
+        }.bind(this)), err => reject(err)
+       
+        
       }, err => reject(err))
     })
   }

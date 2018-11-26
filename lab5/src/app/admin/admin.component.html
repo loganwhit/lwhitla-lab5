@@ -63,8 +63,12 @@
         <p class="admin">User</p>
         </div>
         <button mat-raised-button class="button" (click)="changeStatus(user)">Change Status</button> 
-        
+        <div *ngIf="user.data().active">
         <button mat-raised-button class="button" (click)="disableUser(user)">Disable User</button> 
+        </div>
+        <div *ngIf="!user.data().active">
+        <button mat-raised-button class="button" (click)="disableUser(user)">Activate User</button> 
+        </div>
 
        </mat-list-item>
        </mat-list>

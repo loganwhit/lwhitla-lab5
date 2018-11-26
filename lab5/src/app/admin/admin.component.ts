@@ -81,7 +81,30 @@ export class AdminComponent implements OnInit {
     });
   }
   disableUser(user){
-    this.userService.disableUser(user);
+    if(user.data().active){
+      this.collection.doc(user.id).set({
+      active : false},
+      { merge: true })
+        .then(function() {
+            console.log("Document successfully written!");
+            this.setUsers();
+        }.bind(this))
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+    }
+    else{
+      this.collection.doc(user.id).set({
+      active : true},
+      { merge: true })
+        .then(function() {
+            console.log("Document successfully written!");
+            this.setUsers();
+        }.bind(this))
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+    }
   }
   createItem(value){
     this.adminServ.addItem(value)
