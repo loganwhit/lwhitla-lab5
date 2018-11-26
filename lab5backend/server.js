@@ -104,6 +104,15 @@ router.route('/items/:item_id')
             if(err){
                 res.send(err);
             }
+            if(req.body.name != undefined){
+            item.name = req.body.name;
+            }
+            if(req.body.descript != undefined){
+            item.descript = req.body.descript;
+            }
+            if(req.body.price != undefined){
+            item.price = req.body.price;
+            }
             if(req.body.quantity != undefined){
             item.quantity = req.body.quantity;
             }
@@ -248,28 +257,6 @@ router.route('/items/cartBuy/buy')
                 
             });
         });
-        // Item.findById(req.body.cart[i]._id,(err,item)=>{
-        //     if(err){
-        //         res.send(err);
-        //     }
-        //     item.itemsSold+=req.body.cart[i].quantity;
-            
-        //     item.save(function(err){
-        //         if(err){
-        //             res.send(err);
-        //         }
-        //         res.json({message: 'Item updated'});
-        //     });
-        // });
-        // var item=Item.findById(req.body[i]._id);
-        // item.itemsSold+=req.body[i].quantity;
-        // item.save(function(err){
-        //         if(err){
-        //             res.send(err);
-        //         }
-        //         res.json({message: 'Item updated'});
-        //     });
-    // }
     }
     res.json({message: 'Items updated'});
         

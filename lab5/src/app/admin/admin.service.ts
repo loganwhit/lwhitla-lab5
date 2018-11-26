@@ -33,12 +33,12 @@ export class AdminService {
   }
   
   addItem(value){
+    
      let data = {
         name: value.name,
         price: value.price,
         tax: value.tax,
         quantity: value.quantity,
-        itemsSold: value.amountSold,
         descript: value.descript
     }
     return new Promise<any>((resolve, reject) => {
@@ -57,6 +57,33 @@ export class AdminService {
   
   
     })
+
+  }
+  updateItem(value, id){
+    var itemUrl = this.url+'/'+id;
+     let data = {
+        name: value.name,
+        price: value.price,
+        tax: value.tax,
+        quantity: value.quantity,
+        descript: value.descript
+    }
+    return new Promise<any>((resolve, reject) => {
+      fetch(itemUrl, {
+        method: 'PUT', 
+      body: JSON.stringify(data), 
+      headers:{
+        'Content-Type': 'application/json'
+      }
+      })
+      .then((res) => {
+        
+        resolve(res.json());
+        
+      }), err => reject(err.json())
+  
+  
+    });
 
   }
  

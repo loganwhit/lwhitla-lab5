@@ -59,6 +59,54 @@
             
           </mat-select>
         </mat-form-field>
+        
+<h3>Update Item</h3>
+<mat-form-field class="quantity">
+            <!--(change)="inputChange($event,item)"-->
+          <mat-select  class="updateSel"> 
+              
+            <mat-option class="updateItem" *ngFor="let item of items" [value]="item.name" (click)="updateForm(item)" >
+                {{item.name}}
+            </mat-option>
+           
+            
+          </mat-select>
+        </mat-form-field>
+    <div *ngIf="upItem!=null">
+          <form [formGroup]="updateItem">
+    <label>Name </label>
+      <div class="form-group">
+        
+        <input type="text" formControlName="name" class="form-control" #name placeholder="Enter name">
+      </div>
+      <label>Quantity </label>
+      <div class="form-group">
+        
+        <input type="number" formControlName="quantity" class="form-control" #quant placeholder="Enter quantity">
+      </div>
+      <label>Price </label>
+      <div class="form-group">
+        
+        <input type="number" formControlName="price" class="form-control" #price placeholder="Enter price">
+      </div>
+      <label>Tax </label>
+      <div class="form-group">
+
+        <input type="number" formControlName="tax" class="form-control" #tax placeholder="Enter tax">
+      </div>
+      
+      <label>Description </label>
+      <div class="form-group">
+
+        <textarea type="text" formControlName="descript" class="form-control" #descript placeholder="Enter description"></textarea>
+      </div>
+ 
+      <button (click)="updateProduct(updateItem.value)" type="submit" class="btn btn-success">Submit</button>
+      
+      
+    </form>
+          
+        </div>
 <h3>Admin</h3>
 <mat-list>
         <mat-list-item>

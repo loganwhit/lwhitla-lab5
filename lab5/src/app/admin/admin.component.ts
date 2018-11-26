@@ -16,6 +16,8 @@ export class AdminComponent implements OnInit {
   addItem: FormGroup;
   public collection;
   users;
+  upItem;
+  updateItem:FormGroup;
  private items;
   constructor(private fb: FormBuilder,
   private userService: UserService,
@@ -27,6 +29,7 @@ export class AdminComponent implements OnInit {
        this.createForm();
        this.setUsers();
        this.getItems();
+       this.upItem=null;
        
        
 
@@ -38,7 +41,18 @@ export class AdminComponent implements OnInit {
       this.items=res;
     })
   }
-  
+  updateProduct(value){
+    this.adminServ.updateItem(value, this.upItem._id)
+    .then(res => {
+      console.log(res);
+      this.upItem=null;
+      this.getItems();
+      
+      
+    }, err => {
+      console.log(err);
+    });
+  }
 
   ngOnInit() {
     // if(this.userService.getCurrentUser()){
@@ -82,6 +96,18 @@ export class AdminComponent implements OnInit {
             console.error("Error writing document: ", error);
         });
     }
+    
+  }
+  updateForm(item){
+    this.upItem=item;
+    this.updateItem = this.fb.group({
+      name: [item.name, Validators.required ],
+      quantity: [item.quantity,Validators.required],
+      price: [item.price,Validators.required],
+      tax: [item.tax,Validators.required],
+      // amountSold: ['',Validators.required],
+      descript:[item.descript,Validators.required]
+    });
     
   }
   createForm(){
@@ -132,6 +158,7 @@ export class AdminComponent implements OnInit {
     });
   }
   deleteItem(item){
+    if(confirm("Are you sure you want to delete "+item.name)){
     this.adminServ.deleteItem(item)
      .then(res => {
       console.log(res);
@@ -141,6 +168,7 @@ export class AdminComponent implements OnInit {
     }, err => {
       console.log(err);
     });
+    }
   }
   logout(){
     this.authService.doLogout()
