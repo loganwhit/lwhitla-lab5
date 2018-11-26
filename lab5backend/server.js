@@ -140,6 +140,7 @@ router.route('/items/comment/:item_id')
             }
             if(req.body.comment != undefined){
             item.comments.push(req.body.comment);
+            item.hidden.push(false);
             }
             if(req.body.rating != undefined){
             item.ratings.push(req.body.rating);
@@ -157,6 +158,63 @@ router.route('/items/comment/:item_id')
         });
         
     })
+    
+    
+    router.route('/items/comment/hide/:item_id')
+    .put(function(req,res){
+        Item.findById(req.params.item_id, function(err,item){
+            if(err){
+                res.send(err);
+            }
+            item.hidden.splice(req.body.index,1,true);
+            
+            item.save(function(err){
+                if(err){
+                    res.send(err);
+                }
+                res.json({message: 'Item updated'});
+            });
+        });
+    });
+  
+    
+    router.route('/items/comment/unhide/:item_id')
+        .put(function(req,res){
+        Item.findById(req.params.item_id, function(err,item){
+            if(err){
+                res.send(err);
+            }
+            item.hidden.splice(req.body.index,1,false);
+            
+            item.save(function(err){
+                if(err){
+                    res.send(err);
+                }
+                res.json({message: 'Item updated'});
+            });
+        });
+        });
+        router.route('/items/comment/delete/:item_id')
+        
+        .put(function(req,res){
+        Item.findById(req.params.item_id, function(err,item){
+            if(err){
+                res.send(err);
+            }
+            item.comments.splice(req.body.index,1);
+            item.users.splice(req.body.index,1);
+            item.ratings.splice(req.body.index,1);
+            item.hidden.splice(req.body.index,1);
+            
+            item.save(function(err){
+                if(err){
+                    res.send(err);
+                }
+                res.json({message: 'Item updated'});
+            });
+        });
+    });
+    
     router.route('/items/cart/:item_id')
 .put(function(req,res){
         Item.findById(req.params.item_id, function(err,item){

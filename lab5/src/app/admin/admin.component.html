@@ -44,8 +44,21 @@
       
       
     </form>
+
   
 </div>
+<h3>Delete Item</h3>
+<mat-form-field class="quantity">
+            <!--(change)="inputChange($event,item)"-->
+          <mat-select  class="deleteSel"> 
+              
+            <mat-option class="deleteItem" *ngFor="let item of items" [value]="item.name" (click)="deleteItem(item)" >
+                {{item.name}}
+            </mat-option>
+           
+            
+          </mat-select>
+        </mat-form-field>
 <h3>Admin</h3>
 <mat-list>
         <mat-list-item>

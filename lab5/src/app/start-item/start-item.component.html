@@ -14,13 +14,21 @@
   <hr>
   <mat-list>
       <mat-list-item *ngFor="let num of firstFive"> 
-     
+     <div *ngIf="!data.item.hidden[num]">
         <label matLine>{{data.item.users[num]}}</label>
         <hr matLine>
        
         <h3 matLine>{{data.item.ratings[num]}} Stars</h3>
         
         <p matLine>Comment: {{data.item.comments[num]}}</p>
+        
+        </div>
+     
+      <div *ngIf="data.item.hidden[num]">
+        <p>User comment has been hidden</p>
+        
+          </div>
+          
       
        
        

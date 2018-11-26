@@ -1,12 +1,36 @@
 import { Injectable } from '@angular/core';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
   private url = './api/items';
+  public catalogList;
 
-  constructor() { }
+  constructor() {
+    
+    
+  }
+  deleteItem(item){
+    var deleteUrl = this.url+'/'+item._id;
+    return new Promise<any>((resolve, reject) => {
+      fetch(deleteUrl, {
+        method: 'DELETE', 
+      headers:{
+        'Content-Type': 'application/json'
+      }
+      })
+      .then((res) => {
+        
+        resolve(res.json());
+        
+      }), err => reject(err.json())
+  
+  
+    })
+
+  }
   
   addItem(value){
      let data = {

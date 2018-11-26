@@ -64,6 +64,37 @@ export class UserItemComponent implements OnInit {
       this.showCommentField=false;
     }
   }
+  
+  hideComment(index){
+     this.commentService.hideItemComment(this.data.item,index)
+    .then(res => {
+      console.log(res);
+      this.data.component.reload();
+      this.reload();
+  }, err => {
+      console.log(err);
+    });
+  }
+  deleteComment(index){
+    this.commentService.deleteItemComment(this.data.item,index)
+    .then(res => {
+      console.log(res);
+      this.data.component.reload();
+      this.reload();
+  }, err => {
+      console.log(err);
+    });
+  }
+  showComment(index){
+    this.commentService.showItemComment(this.data.item,index)
+    .then(res => {
+      console.log(res);
+      this.data.component.reload();
+      this.reload();
+  }, err => {
+      console.log(err);
+    });
+  }
 
   
   submitComment(comment){

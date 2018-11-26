@@ -4,6 +4,8 @@ import { AdminService} from './admin.service'
 import {AuthService} from '../core/auth.service'
 import {Router} from '@angular/router';
 import {UserService} from '../core/user.service';
+import {StartService} from '../start/start.service';
+
 
 @Component({
   selector: 'app-admin',
@@ -14,17 +16,29 @@ export class AdminComponent implements OnInit {
   addItem: FormGroup;
   public collection;
   users;
+ private items;
   constructor(private fb: FormBuilder,
   private userService: UserService,
   private router: Router,
   private adminServ : AdminService,
-  private authService: AuthService) {
+  private authService: AuthService,
+  private startService : StartService) {
       this.users=[];
        this.createForm();
        this.setUsers();
+       this.getItems();
+       
        
 
   }
+  getItems(){
+    this.startService.getAll()
+       .then(res => {
+      console.log(res);
+      this.items=res;
+    })
+  }
+  
 
   ngOnInit() {
     // if(this.userService.getCurrentUser()){
@@ -110,6 +124,18 @@ export class AdminComponent implements OnInit {
     this.adminServ.addItem(value)
     .then(res => {
       console.log(res);
+      this.getItems();
+      
+      
+    }, err => {
+      console.log(err);
+    });
+  }
+  deleteItem(item){
+    this.adminServ.deleteItem(item)
+     .then(res => {
+      console.log(res);
+      this.getItems();
       
       
     }, err => {

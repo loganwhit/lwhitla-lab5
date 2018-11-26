@@ -107,7 +107,9 @@ export class StartComponent implements OnInit {
     
     let dialogRef = this.dialog.open(StartItemComponent, {
       width: '600px',
-      data: {item: item}
+      data: {item: item,
+        component: this
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog closed: ${result}`);
