@@ -9,7 +9,7 @@ import {UserItemComponent} from '../user-item/user-item.component';
 import {UserService} from '../core/user.service';
 import {CartService} from '../cart/cart.service';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import {AuthService} from '../core/auth.service';
+
 
 
 
@@ -27,6 +27,7 @@ export class UserComponent implements OnInit {
   private tempArr;
   showMore;
   private user;
+  private isAdmin;
   
 
   constructor(
@@ -38,28 +39,32 @@ export class UserComponent implements OnInit {
     private location : Location,
     private fb: FormBuilder,
     private cartService : CartService) {
+      this.isAdmin=false;
     
+    var context = this;
     this.user = userService.getCurrentUser()
     .then(res => {
       var docRef = authService.getUser(res);
       docRef.get().then(function(doc) {
         if (doc.exists) {
             console.log("Document data:", doc.data());
+           this.isAdmin=doc.data().isAdmin;
         } else {
             authService.addUser(res);
             console.log("No such document!");
         }
-    }).catch(function(error) {
+    }.bind(this)).catch(function(error) {
         console.log("Error getting document:", error);
     });
       
-    }, err => {
+    }), err => {
       console.log(err);
-    });
+    };
     
     this.showMore=false;
     this.itemArr=[];
     this.items=[];
+   
     
     var unsortedItems;
     unsortedItems = this.startServ.getAll()
@@ -90,6 +95,7 @@ export class UserComponent implements OnInit {
     // }
 
   }
+  
   reload(){
     var unsortedItems;
      

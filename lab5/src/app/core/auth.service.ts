@@ -55,7 +55,9 @@ export class AuthService {
   this.db.settings(settings);
     var collection = this.db.collection("users");
     collection.doc(userResp.uid).set({
-      isAdmin : false
+      isAdmin : false,
+      email: userResp.email,
+      displayName: userResp.displayName
         })
         .then(function() {
             console.log("Document successfully written!");
@@ -70,6 +72,13 @@ export class AuthService {
   this.db.settings(settings);
   var collection = this.db.collection("users");
   return collection.doc(userResp.uid);
+  
+  }
+  getAllUsers(){
+    const settings = {timestampsInSnapshots: true};
+  this.db.settings(settings);
+  var collection = this.db.collection("users");
+  return collection;
   
   }
   doRegister(value){

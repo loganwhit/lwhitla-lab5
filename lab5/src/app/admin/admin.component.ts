@@ -12,17 +12,63 @@ import {UserService} from '../core/user.service';
 })
 export class AdminComponent implements OnInit {
   addItem: FormGroup;
+  public collection;
+  users;
   constructor(private fb: FormBuilder,
   private userService: UserService,
   private router: Router,
   private adminServ : AdminService,
   private authService: AuthService) {
-       this.createForm() }
+      this.users=[];
+       this.createForm();
+       this.setUsers();
+       
+
+  }
 
   ngOnInit() {
     // if(this.userService.getCurrentUser()){
     //   this.router.navigate(['/login']);
     // }
+  }
+  setUsers(){
+    this.users=[];
+    this.collection=this.authService.getAllUsers();
+       this.collection.get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          this.users.push(doc);
+          console.log(doc);
+        
+        //console.log(doc.id, " => ", doc.data());
+    }.bind(this));
+}.bind(this));
+  }
+  changeStatus(user){
+    if(user.data().isAdmin){
+      this.collection.doc(user.id).set({
+      isAdmin : false},
+      { merge: true })
+        .then(function() {
+            console.log("Document successfully written!");
+            this.setUsers();
+        }.bind(this))
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+    }
+    else{
+      this.collection.doc(user.id).set({
+      isAdmin : true},
+      { merge: true })
+        .then(function() {
+            console.log("Document successfully written!");
+            this.setUsers();
+        }.bind(this))
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+    }
+    
   }
   createForm(){
     this.addItem = this.fb.group({
@@ -30,9 +76,12 @@ export class AdminComponent implements OnInit {
       quantity: ['',Validators.required],
       price: ['',Validators.required],
       tax: ['',Validators.required],
-      amountSold: ['',Validators.required],
+      // amountSold: ['',Validators.required],
       descript:['',Validators.required]
     });
+  }
+  disableUser(user){
+    this.userService.disableUser(user);
   }
   createItem(value){
     this.adminServ.addItem(value)

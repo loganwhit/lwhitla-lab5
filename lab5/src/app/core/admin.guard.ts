@@ -21,27 +21,37 @@ export class AdminGuard implements CanActivate {
       return new Promise<any>((resolve, reject) => {
       if ( this.authService.isLoggedIn() ) {
             this.user = this.userService.getCurrentUser()
-              .then(res => {
+              .then(function(res) {
                 var docRef = this.authService.getUser(res);
                 docRef.get().then(function(doc) {
                   var data = doc.data().isAdmin;
                   if(doc.data().isAdmin){
                     
-                    resolve( true);
+                    resolve(true);
                   }
+                  else{
+              
                   this.router.navigate(['/user']);
                   resolve(false);
+                  }
                   
-              }).catch(function(error) {
+              }.bind(this)).catch(function(error) {
                   console.log("Error getting document:", error);
               });
                 
-              }, err => {
+              }.bind(this)), err => {
                 console.log(err);
-              });
+              }
+             
         }
+        else{
+        this.router.navigate(['/user']);
+        resolve( false);
+        }
+        
+      });
       }
         
     
   }
-}
+

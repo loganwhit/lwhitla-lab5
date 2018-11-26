@@ -8,6 +8,5 @@ export class FirebaseUserModel {
       this.image = "";
       this.name = "";
       this.provider = "";
-      this.isAdmin = false;
     }
   }

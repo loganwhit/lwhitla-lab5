@@ -2,3 +2,15 @@
     position: absolute;
     right: 5%;
 }
+.name{
+    margin: 10px;
+    width: 150px;
+}
+.email{
+    margin: 10px;
+    width: 300px;
+}
+.admin{
+    margin: 10px;
+    width: 150px;
+}

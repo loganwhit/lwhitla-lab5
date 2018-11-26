@@ -28,11 +28,11 @@
         <input type="number" formControlName="tax" class="form-control" #tax placeholder="Enter tax">
       </div>
       
-      <label>Amount Sold </label>
-      <div class="form-group">
+      <!--<label>Amount Sold </label>-->
+      <!--<div class="form-group">-->
 
-        <input type="number" formControlName="amountSold" class="form-control" #sold placeholder="Enter amount sold">
-      </div>
+      <!--  <input type="number" formControlName="amountSold" class="form-control" #sold placeholder="Enter amount sold">-->
+      <!--</div>-->
       
       <label>Description </label>
       <div class="form-group">
@@ -41,6 +41,30 @@
       </div>
  
       <button (click)="createItem(addItem.value)" type="submit" class="btn btn-success">Submit</button>
+      
+      
     </form>
   
 </div>
+<h3>Admin</h3>
+<mat-list>
+        <mat-list-item>
+            <p class="name">Name</p>
+             <p class="email">Email</p>
+            <p class="admin">Admin Status</p>
+        </mat-list-item>
+        <mat-list-item *ngFor="let user of users"> 
+        <p class="name">{{user.data().displayName}}</p>
+        <p class="email">{{user.data().email}}</p>
+        <div *ngIf="user.data().isAdmin">
+        <p class="admin">Admin</p>
+        </div>
+        <div *ngIf="!user.data().isAdmin">
+        <p class="admin">User</p>
+        </div>
+        <button mat-raised-button class="button" (click)="changeStatus(user)">Change Status</button> 
+        
+        <button mat-raised-button class="button" (click)="disableUser(user)">Disable User</button> 
+
+       </mat-list-item>
+       </mat-list>
