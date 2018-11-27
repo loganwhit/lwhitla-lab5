@@ -106,7 +106,7 @@ export class ProfileComponent implements OnInit {
      this.itemCollection.get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
        this.itemReferences.push(doc);
-        // console.log(doc.id, " => ", doc.data());
+      
         }.bind(this));
         for (var i=0; i<this.itemReferences.length; i++){
          var itemIndex= this.itemIDs.indexOf(this.itemReferences[i].id); 

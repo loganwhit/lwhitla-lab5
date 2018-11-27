@@ -8,6 +8,38 @@
     <a mat-tab-link id="logoutNavButton" (click)="logout()" routerLink="/start">Logout</a>
 </nav>
 
+<h2>Public Lists</h2>
+ <mat-form-field class="collections">
+         
+          <mat-select  class="collectionSel"> 
+              
+            <mat-option class="collectionOption" *ngFor="let user of usersData; let i = index" (click)="openCollection(i)" >
+                {{user.data().displayName}} {{collectionProperties[i].data().name}}
+            </mat-option>
+           
+            
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="publicViewList">
+            <label>Owner: {{listOwner}}</label>
+            <br>
+            <label>Title: {{listName}}</label>
+            <br>
+            <label>Description: {{listDescription}}</label>
+            <mat-list>
+                <mat-list-item>
+            <p class="name">Name</p>
+             <p class="price">Price</p>
+            <p class="quantity">Quantity</p>
+            </mat-list-item>
+            <mat-list-item *ngFor="let item of publicItems"> 
+           <p class="name" >{{item.name}}</p>
+            <p class="price" >${{item.price}}</p>
+            <p class="quantityRem">{{item.quantity}}</p>
+        </mat-list-item>
+            </mat-list>
+        </div>
+
 
 <h2>Catalog </h2>
 <div *ngIf="!showMore">

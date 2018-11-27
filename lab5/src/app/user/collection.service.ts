@@ -40,9 +40,10 @@ export class CollectionService {
     
   
     }
-  getCollections(){
+  getCollections(user){
+    user = this.userDetails || user;
     var lists=[];
-   var lists= this.collection.doc(this.userDetails.uid).collection('Collections');
+   var lists= this.collection.doc(user.uid).collection('Collections');
    return lists;
 
   }

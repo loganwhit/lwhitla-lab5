@@ -22,11 +22,15 @@ import { AngularFireAuth } from '@angular/fire/auth';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
+  private listDescription;
+  private listName;
+  private usersData;
   modalItem;
   dialogResult;
   items;
   private userDetails;
   private itemArr;
+  private itemIDs;
   private tempArr;
   showMore;
   private user;
@@ -34,6 +38,16 @@ export class UserComponent implements OnInit {
   private collectionCreate;
   collectionItems;
   private setPublic;
+  private userCollection;
+  private userNames;
+  collectionsLists;
+
+  private listItems;
+  private collectionProperties;
+  private listOwner;
+  private publicItems;
+  private publicViewList;
+
   
 
   constructor(
@@ -47,8 +61,15 @@ export class UserComponent implements OnInit {
     private fb: FormBuilder,
     private cartService : CartService,
     private collectionsService: CollectionService) {
+      this.itemIDs=[];
+      this.publicViewList=false;
+      
       this.setPublic=false;
       this.isAdmin=false;
+      this.userCollection=authService.getAllUsers();
+      
+     
+      
     this.collectionCreate=false;
     this.collectionItems=[];
     var context = this;
@@ -84,10 +105,12 @@ export class UserComponent implements OnInit {
     .then(res => {
       console.log(res);
       for(var x in res){
-        
       
       this.itemArr.push(res[x]);
+      this.itemIDs.push(res[x]._id);
+      
     }
+    this.getPublicCollections();
     try{
       
     this.sortItems(this.itemArr);
@@ -108,6 +131,50 @@ export class UserComponent implements OnInit {
     // }
 
   }
+  getPublicCollections(){
+    this.usersData=[];
+      this.collectionsLists=[];
+      this.collectionProperties=[];
+      this.listItems=[];
+    this.userCollection.get().then(function(querySnapshot) { //https://firebase.google.com/docs/firestore/query-data/get-data
+      querySnapshot.forEach(function(doc) {
+       
+        this.userCollection.doc(doc.id).collection('Collections').where("isPublic", "==", true)
+        .get()
+        .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc2) {
+              
+              this.userCollection.doc(doc.id).collection('Collections').doc(doc2.id).collection('Items').get().then(function(querySnapshot) {
+                var listData = [];
+                var tempItemList = JSON.stringify(this.itemArr);
+                tempItemList=JSON.parse(tempItemList);
+              querySnapshot.forEach(function(doc3) {
+                 listData.push(doc3);
+                 
+                    }.bind(this));
+                    this.listItems=[];
+                     for (var i=0; i<listData.length; i++){
+                       var itemIndex= this.itemIDs.indexOf(listData[i].id); 
+                        var item = tempItemList[itemIndex];
+                        //this.itemIndices.push(itemIndex);
+                      item.quantity=listData[i].data().quantity;
+                      this.listItems.push(item);
+                      }
+                    this.collectionsLists.push(this.listItems);
+                    this.usersData.push(doc);
+                    this.collectionProperties.push(doc2);
+                    
+                }.bind(this));
+                
+            }.bind(this));
+        }.bind(this))
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
+      
+    }.bind(this));
+}.bind(this));
+  }
   addCollection(name, description, isPublic){
     this.collectionsService.addCollection(this.collectionItems,name, description, isPublic);
   }
@@ -123,7 +190,7 @@ export class UserComponent implements OnInit {
   
   reload(){
     var unsortedItems;
-     
+     this.itemIDs=[];
     this.tempArr=[];
     unsortedItems = this.startServ.getAll()
     .then(res => {
@@ -132,6 +199,7 @@ export class UserComponent implements OnInit {
         
       
       this.tempArr.push(res[x]);
+      this.itemIDs.push(res[x]._id);
     }
     try{
       
@@ -182,6 +250,16 @@ export class UserComponent implements OnInit {
     }, (error) => {
       console.log("Logout error", error);
     });
+  }
+  openCollection(index){
+    this.publicViewList=true;
+    this.listName=this.collectionProperties[index].data().name;
+    this.listDescription=this.collectionProperties[index].data().description;
+    this.listOwner = this.usersData[index].data().displayName;
+    this.publicItems = this.collectionsLists[index];
+    
+    
+    
   }
 
   openDialog(item) {
