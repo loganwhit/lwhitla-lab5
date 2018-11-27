@@ -23,5 +23,44 @@
       </div>
     </div>
   </div>
+  <h3>Collections</h3>
+  <mat-form-field class="collections">
+            <!--(change)="inputChange($event,item)"-->
+          <mat-select  class="collectionSel"> 
+              
+            <mat-option class="collectionOption" *ngFor="let list of collectionsData" (click)="openCollection(list)" >
+                {{list.name}}
+            </mat-option>
+           
+            
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="editList">
+        <mat-form-field>
+        <input class="collectionInput" matInput #colName placeholder="Collection Name" type='text' [value]="listName">
+         </mat-form-field>
+           <mat-form-field>
+        <textarea type="text" class="collectionInput" matInput #colDesc placeholder="Collection Description" [value]="listDescription"></textarea>
+        </mat-form-field>
+        <mat-slide-toggle
+            [(ngModel)]="listPublic">
+            Set Public
+            </mat-slide-toggle>
+    <!--    <mat-list>-->
+     
+    <!--    <mat-list-item *ngFor="let item of collectionItems"> -->
+     
+    <!--   <p>{{item.name}}</p>-->
+    <!--   <p class="price" >${{item.price}}</p>-->
+      
+    <!--   <input class="quantity" matInput #colQuant type='number' min=1 [value]="item.quantity">-->
+    <!--   </mat-list-item>-->
+        
+    <!--</mat-list>-->
+   
+   
+            
+    </div>
+  <!--<button mat-raised-button (click)="createCollection(user.id)"></button>-->
 </div>
 

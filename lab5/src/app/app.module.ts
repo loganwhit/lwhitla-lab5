@@ -30,6 +30,7 @@ import { CartComponent } from './cart/cart.component';
 import {MatSelectModule} from '@angular/material/select';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { ReceiptComponent } from './receipt/receipt.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 
@@ -74,7 +75,8 @@ import { ReceiptComponent } from './receipt/receipt.component';
     MatListModule,
     MatDialogModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSlideToggleModule
    
   ],
   entryComponents:[StartItemComponent, UserItemComponent, ReceiptComponent],

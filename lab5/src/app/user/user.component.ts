@@ -9,6 +9,8 @@ import {UserItemComponent} from '../user-item/user-item.component';
 import {UserService} from '../core/user.service';
 import {CartService} from '../cart/cart.service';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import {CollectionService} from './collection.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 
 
@@ -23,31 +25,42 @@ export class UserComponent implements OnInit {
   modalItem;
   dialogResult;
   items;
+  private userDetails;
   private itemArr;
   private tempArr;
   showMore;
   private user;
   private isAdmin;
+  private collectionCreate;
+  collectionItems;
+  private setPublic;
   
 
   constructor(
     public dialog: MatDialog, private startServ: StartService,
+    public afAuth: AngularFireAuth,
     private router: Router,
     public authService: AuthService,
     private userService: UserService,
     private route: ActivatedRoute,
     private location : Location,
     private fb: FormBuilder,
-    private cartService : CartService) {
+    private cartService : CartService,
+    private collectionsService: CollectionService) {
+      this.setPublic=false;
       this.isAdmin=false;
-    
+    this.collectionCreate=false;
+    this.collectionItems=[];
     var context = this;
-    this.user = userService.getCurrentUser()
+    
+    userService.getCurrentUser()
     .then(res => {
       var docRef = authService.getUser(res);
+      
       docRef.get().then(function(doc) {
         if (doc.exists) {
             console.log("Document data:", doc.data());
+          
            this.isAdmin=doc.data().isAdmin;
         } else {
             authService.addUser(res);
@@ -94,6 +107,18 @@ export class UserComponent implements OnInit {
     //   this.router.navigate(['/login']);
     // }
 
+  }
+  addCollection(name, description, isPublic){
+    this.collectionsService.addCollection(this.collectionItems,name, description, isPublic);
+  }
+  addToCollection(item, quantity){
+   var holdItem = JSON.stringify(item);
+    var tempItem = JSON.parse(holdItem);
+    tempItem.quantity=quantity;
+    this.collectionItems.push(tempItem);
+  }
+  createCollection(){
+    this.collectionCreate=true;
   }
   
   reload(){

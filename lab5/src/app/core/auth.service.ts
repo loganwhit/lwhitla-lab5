@@ -85,7 +85,7 @@ export class AuthService {
       resolve(userRef);
       
       
-    }
+    });
     
   }
   getAllUsers(){

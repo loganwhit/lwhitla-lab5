@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
   verifyEmail(value){
     this.authService.doLogin(value, true).then(res => {
       alert("Verification email sent");
-    }
+    });
   }
   login(value){
     this.authService.doLogin(value)

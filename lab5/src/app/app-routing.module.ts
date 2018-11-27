@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard]},
   { path: 'cart' , component: CartComponent, canActivate:[AuthGuard]},
-  { path: 'profile', component: ProfileComponent,  resolve: { data: UserResolver}}
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard],  resolve: { data: UserResolver}}
 ];
 
 @NgModule({

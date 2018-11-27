@@ -112,14 +112,14 @@ export class CartService {
         headers:{
         'Content-Type': 'application/json'
   }})
-      .then((res) => {
+      .then(res => {
         
         resolve(res.json());
         this.getCatalogList();
         
-      }.bind(this)), err => reject(err.json())
+      }.bind(this)), err => reject(err.json());
   
-    }.bind(this))
+    }.bind(this));
     });
   
     
