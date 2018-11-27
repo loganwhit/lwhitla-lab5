@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
     private fb: FormBuilder,
     private startService : StartService,
     private collectionService: CollectionService) {
-      this.adIt=false;
+      this.addIt=false;
       this.itemIDs=[];
       this.itemArr=[];
       startService.getAll().then(function(res){
@@ -50,18 +50,14 @@ export class ProfileComponent implements OnInit {
           this.itemArr.push(res[i]);
         }
       }.bind(this))
+      this.refreshCollections();
       
       this.editList=false;
       this.listItems=[];
       this.collectionsData=[];
       this.itemReferences=[];
       this.collections= collectionService.getCollections();
-      this.collections.get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-       this.collectionsData.push(doc);
-        // console.log(doc.id, " => ", doc.data());
-        }.bind(this));
-    }.bind(this));
+      
     }
 
   ngOnInit() {
@@ -120,6 +116,16 @@ export class ProfileComponent implements OnInit {
     }.bind(this));
     
   }
+  refreshCollections(){
+    this.collectionsData=[];
+    this.collections=this.collectionService.getCollections();
+    this.collections.get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+       this.collectionsData.push(doc);
+        // console.log(doc.id, " => ", doc.data());
+        }.bind(this));
+    }.bind(this));
+  }
   createForm(name) {
     this.profileForm = this.fb.group({
       name: [name, Validators.required ]
@@ -171,21 +177,41 @@ export class ProfileComponent implements OnInit {
   }
   saveList(){
     
-    var listCollection = this.collectionService.getCollections();
-    listCollection.doc(this.tempListId).set({
+    
+    this.collections.doc(this.tempListId).set({
       description: this.listDescription,
       name: this.listName,
       isPublic: this.listPublic}, {merge : true} )
       .then(function(res){
         for(var i=0; i<this.listItems.length; i++){
-          listCollection.doc(this.tempListId).collection('Items').doc(this.listItems[i]._id).set({
+          this.collections.doc(this.tempListId).collection('Items').doc(this.listItems[i]._id).set({
           quantity: this.listItems[i].quantity }, {merge : true} ).then(function(res){
             console.log("Sucessfully Updated");
             this.addIt=false;
-          })
+            this.refreshCollections();
+          }.bind(this))
         }
       }.bind(this))
       
       
+  }
+  deleteList(){
+    var listItemIDs=[];
+    for(var i=0; i<this.itemReferences.length; i++){
+   
+      this.collections.doc(this.tempListId).collection('Items').doc(this.itemReferences[i].id).delete();
+      
+    }
+    
+    this.collections.doc(this.tempListId).delete().then(function() {
+    console.log("Document successfully deleted!");
+    this.refreshCollections();
+    this.editList=false;
+    this.listName='';
+    this.listDescription='';
+    this.listPublic=false;
+    }.bind(this)).catch(function(error) {
+    console.error("Error removing document: ", error);
+    });
   }
 }

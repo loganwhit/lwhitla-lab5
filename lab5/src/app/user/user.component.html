@@ -112,7 +112,8 @@
        <p>{{item.name}}</p>
        <p class="price" >${{item.price}}</p>
       
-       <input class="quantity" matInput #colQuant type='number' min=1 [value]="item.quantity">
+       <input class="quantity" matInput #colQuant type='number' min=1 [(ngModel)]="item.quantity">
+       <button mat-raised-button class="button" (click)="removeItem(item)">Remove Item</button>
        </mat-list-item>
         
     </mat-list>

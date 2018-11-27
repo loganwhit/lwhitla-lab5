@@ -62,7 +62,7 @@ export class CollectionService {
   name: name,
   description: description,
   isPublic: isPublic
-}, { merge: true })
+})
 .then(function(res){
   for(var i=0; i<itemList.length; i++){
   this.collection.doc(this.userDetails.uid).collection('Collections').doc(this.counter.toString()).collection('Items').doc(itemList[i]._id).set({

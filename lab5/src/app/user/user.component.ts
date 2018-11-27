@@ -184,6 +184,12 @@ export class UserComponent implements OnInit {
     tempItem.quantity=quantity;
     this.collectionItems.push(tempItem);
   }
+  removeItem(item){
+   var index = this.collectionItems.indexOf(item);
+   this.collectionItems.splice(index,1);
+  
+  }
+
   createCollection(){
     this.collectionCreate=true;
   }
@@ -261,7 +267,7 @@ export class UserComponent implements OnInit {
     
     
   }
-
+  
   openDialog(item) {
 
     this.modalItem=item;
