@@ -9,10 +9,15 @@
 <body>
     <p>Welcome to Log's Goods. The site offers a marketplace for antique goods. Please register and sign in for additional functionality</p>
     <div *ngIf="!showMore">
+        <label>Items are ordered by most sold</label>
     <mat-list>
         <mat-list-item *ngFor="let item of items"> 
        <!--<a routerLink {{item.name}} -->
+        <div *ngIf="item.quantity>0">
+     
+       
        <a (click)="openDialog(item)">{{item.name}}</a>
+       </div>
         </mat-list-item>
     </mat-list>
     <div *ngIf="!(itemArr.length<11)">

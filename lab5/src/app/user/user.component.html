@@ -19,13 +19,16 @@
            
         </mat-list-item>
         <mat-list-item *ngFor="let item of items"> 
-       <!--<a routerLink {{item.name}} -->
+        <div *ngIf="item.quantity>0">
+  <mat-list-item>
        <a class="name" (click)="openDialog(item)">{{item.name}}</a>
         <p class="price" >${{item.price}}</p>
         <p class="quantityRem">{{item.quantity}}</p>
-       <input class="quantity" matInput #quant type='number' value=1>
+       <input class="quantity" matInput #quant type='number' min=1 value=1>
        
        <button mat-raised-button class="cartButton" (click)="addCart(item, quant.value)">Add to Cart</button>
+       </mat-list-item>
+       </div>
         </mat-list-item>
     </mat-list>
     <div *ngIf="!(itemArr.length<11)">
@@ -35,10 +38,17 @@
     
     <div *ngIf="showMore">
     <mat-list>
+        <div *ngIf="item.quantity>0">
         <mat-list-item *ngFor="let item of itemArr"> 
        <!--<a routerLink {{item.name}} -->
        <a (click)="openDialog(item)">{{item.name}}</a>
+       <p class="price" >${{item.price}}</p>
+        <p class="quantityRem">{{item.quantity}}</p>
+       <input class="quantity" matInput #quant type='number' value=1>
+       
+       <button mat-raised-button class="cartButton" (click)="addCart(item, quant.value)">Add to Cart</button>
         </mat-list-item>
+        </div>
     </mat-list>
     <div *ngIf="itemArr.length>10">
     <button mat-button (click) = showOrHide()>Hide</button>

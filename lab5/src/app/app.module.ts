@@ -29,6 +29,7 @@ import { UserItemComponent } from './user-item/user-item.component';
 import { CartComponent } from './cart/cart.component';
 import {MatSelectModule} from '@angular/material/select';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { ReceiptComponent } from './receipt/receipt.component';
 
 
 
@@ -45,6 +46,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     StartItemComponent,
     UserItemComponent,
     CartComponent,
+    ReceiptComponent,
    
     
   
@@ -75,7 +77,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     MatSelectModule
    
   ],
-  entryComponents:[StartItemComponent, UserItemComponent],
+  entryComponents:[StartItemComponent, UserItemComponent, ReceiptComponent],
 
   providers: [AuthGuard,UserResolver,AdminGuard],
   bootstrap: [AppComponent]

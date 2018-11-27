@@ -100,6 +100,7 @@ export class UserItemComponent implements OnInit {
   submitComment(comment){
    
     var user = firebase.auth().currentUser;
+    if(comment!='' || this.rating!=undefined){
     this.commentService.addItemComment(this.data.item,comment,this.rating,user)
     .then(res => {
       console.log(res);
@@ -108,6 +109,8 @@ export class UserItemComponent implements OnInit {
   }, err => {
       console.log(err);
     });
+    }
+    else{alert("Comment or rating must have a value");}
   }
   onCloseConfirm() {
     this.thisDialogRef.close('Confirm');

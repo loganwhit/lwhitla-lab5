@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {StartService} from '../start/start.service';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -62,14 +63,18 @@ export class CartService {
   
   }
   incrementCart(item,quant){
+    return new Promise<any>((resolve, reject) => {
     var trigger = false;
     var holdItem = JSON.stringify(item);
     var tempItem = JSON.parse(holdItem);
     // item.quantity=itemQuantity-quant;
     var itemQuantity;
-    for (var x=0; x<this.catalogList.length; x++){
-      if(tempItem._id == this.catalogList[x]._id){
-        itemQuantity=this.catalogList[x].quantity;
+    this.catalogList= this.startServ.getAll().then(function(res){
+      
+   
+    for (var x=0; x<res.length; x++){
+      if(tempItem._id == res[x]._id){
+        itemQuantity=res[x].quantity;
       }
     }
     if(quant>itemQuantity){
@@ -99,7 +104,7 @@ export class CartService {
     }
    
     
-    return new Promise<any>((resolve, reject) => {
+    
       
       fetch(itemUrl, {
         method: 'PUT',
@@ -112,34 +117,37 @@ export class CartService {
         resolve(res.json());
         this.getCatalogList();
         
-      }), err => reject(err.json())
+      }.bind(this)), err => reject(err.json())
   
-  
+    }.bind(this))
     });
   
     
   }
  
   getCatalogList(){
-    this.catalogList=this.startServ.getAll();
+    this.catalogList=this.startServ.getAll().then(res => {
+      console.log(res);
+    })
   }
   addToCart(item,quant){
     
     var trigger = false;
     var holdItem = JSON.stringify(item);
     var tempItem = JSON.parse(holdItem);
-    item.quantity-=parseInt(quant);
-    var itemQuantity;
-    for (var x=0; x<this.catalogList.length; x++){
+    
+    // var itemQuantity;
+    // for (var x=0; x<this.catalogList.length; x++){
    
-      if(tempItem._id == this.catalogList[x]._id){
-        itemQuantity=this.catalogList[x].quantity;
-      }
-    }
-    if(quant>itemQuantity){
+    //   if(tempItem._id == this.catalogList[x]._id){
+    //     itemQuantity=this.catalogList[x].quantity;
+    //   }
+    // }
+    if(quant>item.quantity){
       alert("Quantity must be smaller or equal to quantity remaining");
       return;
     }
+    item.quantity-=parseInt(quant);
     for (var x=0; x<this.cartList.length; x++){
    
       if(tempItem._id == this.cartList[x]._id){

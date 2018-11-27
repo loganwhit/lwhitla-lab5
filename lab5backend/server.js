@@ -151,8 +151,15 @@ router.route('/items/comment/:item_id')
             item.comments.push(req.body.comment);
             item.hidden.push(false);
             }
+            else{
+                item.comments.push('');
+                item.hidden.push(false);
+            }
             if(req.body.rating != undefined){
             item.ratings.push(req.body.rating);
+            }
+            else{
+                item.ratings.push(0);
             }
             if(req.body.user != undefined){
             item.users.push(req.body.user);

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {CartService} from './cart.service';
 import {AuthService} from '../core/auth.service';
 import { Router } from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {ReceiptComponent} from '../receipt/receipt.component'
 
 @Component({
   selector: 'app-cart',
@@ -10,13 +12,14 @@ import { Router } from '@angular/router';
 })
 export class CartComponent implements OnInit {
   cartList;
-  // lastChange;
+  dialogResult;
   numbers;
   minusTen;
   sumTotal;
  
 
-  constructor(private cartService : CartService, private authService: AuthService, private router : Router) {this.cartList=this.cartService.getCart();
+  constructor(private cartService : CartService, private authService: AuthService, private router : Router, private dialog : MatDialog,
+  ) {this.cartList=this.cartService.getCart();
   this.numbers = Array(10).fill(1).map((x,i)=>i);
     this.minusTen=true;
     
@@ -30,8 +33,11 @@ export class CartComponent implements OnInit {
     }
   }
   buy(){
+    if(confirm("Are you sure you want to buy?")){
+      
     this.cartService.buy()
     .then(res => {
+      this.openDialog();
       console.log(res);
       this.cartList=this.cartService.getCart();
       this.sumTotal=0;
@@ -41,6 +47,7 @@ export class CartComponent implements OnInit {
       console.log(err);
     });
     
+  }
   }
 
   ngOnInit() {
@@ -90,9 +97,11 @@ export class CartComponent implements OnInit {
   
   
   clearItems(){
+    if(confirm("Are you sure you want to clear your cart?")){
     var holdLength = this.cartList.length;
     for (var x=0; x<holdLength; x++){
       this.removeItem(this.cartList[0], this.cartList[0].quantity);
+    }
     }
   }
   addCart(cartItem, quant){
@@ -105,6 +114,22 @@ export class CartComponent implements OnInit {
       console.log(err);
     });
   
+}
+openDialog() {
+
+    
+    let dialogRef = this.dialog.open(ReceiptComponent, {
+      width: '600px',
+      data: {cart : this.cartList, component: this, total:this.sumTotal}
+      
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog closed: ${result}`);
+      this.dialogResult = result;
+      // itemObs.unsubscribe();
+    });
+  
+
 }
 
 }

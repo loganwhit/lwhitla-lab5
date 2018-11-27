@@ -158,26 +158,19 @@ export class UserComponent implements OnInit {
       console.log("Logout error", error);
     });
   }
-  // observable = Observable;
-  // observer = {
-  //   next: (value) => {
-      
-  //     this.modalItem = value;
-  //     this.modalItem$.next(value);
-  //   }
-  // }
-  // subscription = this.observable.subscribe(this.observer);
+
   openDialog(item) {
+
     this.modalItem=item;
     let dialogRef = this.dialog.open(UserItemComponent, {
       width: '600px',
-      data: {item : item,
-        component: this
-      }
+      data: {item : item, component: this}
+      
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog closed: ${result}`);
       this.dialogResult = result;
+      // itemObs.unsubscribe();
     });
   
 

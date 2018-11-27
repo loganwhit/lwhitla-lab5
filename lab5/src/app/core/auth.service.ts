@@ -5,6 +5,7 @@ import * as firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
+
 // import { AngularFireDatabase, FirebaseListObservable } from '@angular/fire/database';
 // class User {
 //     constructor(public uid, public isAdmin) { }
@@ -114,12 +115,13 @@ export class AuthService {
         }).catch(function(error) {});
         this.doLogout();
         // this.AddUser(user.uid);
-      }), err => reject(err)
+      }) .catch(err => {reject(err)})
 
 
       
     })
   }
+ 
   isLoggedIn() {
   if (this.userDetails == null ) {
       return false;
@@ -128,12 +130,21 @@ export class AuthService {
     }
   }
 
-  doLogin(value){
+  doLogin(value, emailVer){
+    emailVer = false || emailVer;
     return new Promise<any>((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(value.email, value.password)
       .then(res => {
+     
         var user=firebase.auth().currentUser;
+           
         var resHold= res;
+        if(emailVer){
+          user.sendEmailVerification().then(function() {
+            this.doLogout();
+  
+        }).catch(function(error) {});
+        }
         
         if(!user.emailVerified){
           this.doLogout();
@@ -143,7 +154,7 @@ export class AuthService {
           
            if(res.exists){
             if(!(res.data().active)){
-            alert("User is disabled");
+            alert("User is disabled. Please contact a manager");
             this.doLogout();
           }
           else{

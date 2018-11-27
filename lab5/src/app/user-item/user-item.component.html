@@ -5,7 +5,7 @@
   <mat-list>
     <mat-list-item>
       <p class="price" >${{data.item.price}}</p>
-      <input class="quantity" matInput #quant type="number" value=1>
+      <input class="quantity" matInput min=1 #quant type="number" value=1>
 
        <button mat-raised-button class="cartButton" (click)="addCart(data.item, quant.value)">Add to Cart</button>
        </mat-list-item>
@@ -68,10 +68,10 @@
         <br>
     
     </div>
-        
+       
   <mat-dialog-actions>
     <button mat-raised-button (click)="onCloseConfirm()">CONFIRM</button>&nbsp;
     <button mat-raised-button (click)="onCloseCancel()">CANCEL</button>
   </mat-dialog-actions>
-   </mat-dialog-content>
+    </mat-dialog-content>
 </div>

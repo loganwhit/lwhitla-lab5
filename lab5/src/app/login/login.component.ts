@@ -12,6 +12,8 @@ import {AuthService} from '../core/auth.service';
 export class LoginComponent implements OnInit {
   hide =true;
   loginForm: FormGroup;
+  verify;
+  
   
   message='';
   constructor(public authService: AuthService,
@@ -19,6 +21,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder) {
       this.createForm();
+      this.verify=false;
      }
 
   ngOnInit() {
@@ -29,12 +32,20 @@ export class LoginComponent implements OnInit {
       password: ['',Validators.required]
     });
   }
+  verifyEmail(value){
+    this.authService.doLogin(value, true).then(res => {
+      alert("Verification email sent");
+    }
+  }
   login(value){
     this.authService.doLogin(value)
     .then(res => {
       console.log(res);
       if(!res.user.emailVerified){
         this.message='Please verify your email address';
+        this.verify=true;
+        
+        return;
       }
       if(res.user.displayName==null){
       var userName= value.email.substr(0, value.email.indexOf('@'));
