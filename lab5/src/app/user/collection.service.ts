@@ -46,6 +46,11 @@ export class CollectionService {
    return lists;
 
   }
+  getItems(id, user){
+    user = this.userDetails || user;
+    var items = this.collection.doc(user.uid).collection('Collections').doc(id).collection('Items');
+    return items;
+  }
   
   addCollection(itemList, name, description, isPublic){
   
