@@ -37,8 +37,8 @@ export class LoginComponent implements OnInit {
       alert("Verification email sent");
     });
   }
-  login(value){
-    this.authService.doLogin(value)
+  login(value, undefined){
+    this.authService.doLogin(value, undefined)
     .then(res => {
       console.log(res);
       if(!res.user.emailVerified){

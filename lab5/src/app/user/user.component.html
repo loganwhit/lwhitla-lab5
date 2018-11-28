@@ -50,14 +50,15 @@
             <p class="quantity">Quantity</p>
            
         </mat-list-item>
-        <mat-list-item *ngFor="let item of items"> 
+        <mat-list-item *ngFor="let item of items; let i=index"> 
         <div *ngIf="item.quantity>0">
   <mat-list-item>
-       <a class="name" (click)="openDialog(item)">{{item.name}}</a>
+       <a class="name" (click)="openDialog(item,i)">{{item.name}}</a>
         <p class="price" >${{item.price}}</p>
         <p class="quantityRem">{{item.quantity}}</p>
-       <input class="quantity" matInput #quant type='number' min=1 value=1>
-       
+        
+       <input class="quantity" appearance="outline" matInput #quant type='number' min=1 value=1>
+     
        <button mat-raised-button class="cartButton" (click)="addCart(item, quant.value)">Add to Cart</button>
        <div *ngIf="collectionCreate">
        <button mat-raised-button class="cartButton" (click)="addToCollection(item, quant.value)">Add to Collection</button>
@@ -79,7 +80,9 @@
        <a (click)="openDialog(item)">{{item.name}}</a>
        <p class="price" >${{item.price}}</p>
         <p class="quantityRem">{{item.quantity}}</p>
-       <input class="quantity" matInput #quant type='number' min=1 value=1>
+       
+       <input class="quantity" appearance="outline" matInput #quant type='number' min=1 value=1>
+     
        
        <button mat-raised-button class="cartButton" (click)="addCart(item, quant.value)">Add to Cart</button>
        <div *ngIf="collectionCreate">
@@ -95,10 +98,10 @@
     <button mat-raised-button class="button" (click)=createCollection()>Create Collection</button>
     
     <div *ngIf="collectionCreate">
-        <mat-form-field>
+        <mat-form-field  appearance="outline">
         <input class="collectionInput" matInput #colName placeholder="Collection Name" type='text'>
          </mat-form-field>
-           <mat-form-field>
+           <mat-form-field appearance="outline">
         <textarea type="text" class="collectionInput" matInput #colDesc placeholder="Collection Description"></textarea>
         </mat-form-field>
         <mat-slide-toggle
@@ -111,8 +114,9 @@
      
        <p>{{item.name}}</p>
        <p class="price" >${{item.price}}</p>
-      
-       <input class="quantity" matInput #colQuant type='number' min=1 [(ngModel)]="item.quantity">
+    
+       <input class="quantity" appearance="outline" matInput #colQuant type='number' min=1 [(ngModel)]="item.quantity">
+   
        <button mat-raised-button class="button" (click)="removeItem(item)">Remove Item</button>
        </mat-list-item>
         

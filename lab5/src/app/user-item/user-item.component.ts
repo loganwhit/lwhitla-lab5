@@ -15,14 +15,16 @@ export class UserItemComponent implements OnInit {
   showCommentField;
   numbers;
   firstFive;
+  item;
   constructor(public thisDialogRef: MatDialogRef<UserItemComponent>, 
   @Inject(MAT_DIALOG_DATA) public data, 
   private commentService : ItemCommentService,
   private cartService : CartService) { 
+    this.item=this.data.item;
     this.showCommentField=false;
-    this.numbers = Array(this.data.item.comments.length).fill(1).map((x,i)=>i);
+    this.numbers = Array(this.item.comments.length).fill(1).map((x,i)=>i);
     if(this.numbers.length>5){
-      this.firstFive=this.numbers.slice(this.numbers.length-5, this.numbers,length);
+      this.firstFive=this.numbers.slice(0, 5);
     }
     else{
       this.firstFive=this.numbers;
@@ -32,9 +34,11 @@ export class UserItemComponent implements OnInit {
   ngOnInit() {
   }
   reload(){
-    this.numbers = Array(this.data.item.comments.length).fill(1).map((x,i)=>i);
+   
+    this.numbers = Array(this.item.comments.length).fill(1).map((x,i)=>i);
+    
     if(this.numbers.length>5){
-      this.firstFive=this.numbers.slice(this.numbers.length-5, this.numbers,length);
+      this.firstFive=this.numbers.slice(0, 5);
     }
     else{
       this.firstFive=this.numbers;
@@ -66,31 +70,31 @@ export class UserItemComponent implements OnInit {
   }
   
   hideComment(index){
-     this.commentService.hideItemComment(this.data.item,index)
+     this.commentService.hideItemComment(this.item,index)
     .then(res => {
       console.log(res);
-      this.data.component.reload();
-      this.reload();
+      this.data.component.reload(this);
+      //this.reload();
   }, err => {
       console.log(err);
     });
   }
   deleteComment(index){
-    this.commentService.deleteItemComment(this.data.item,index)
+    this.commentService.deleteItemComment(this.item,index)
     .then(res => {
       console.log(res);
-      this.data.component.reload();
-      this.reload();
+      this.data.component.reload(this);
+      //this.reload();
   }, err => {
       console.log(err);
     });
   }
   showComment(index){
-    this.commentService.showItemComment(this.data.item,index)
+    this.commentService.showItemComment(this.item,index)
     .then(res => {
       console.log(res);
-      this.data.component.reload();
-      this.reload();
+      this.data.component.reload(this);
+      //this.reload();
   }, err => {
       console.log(err);
     });
@@ -101,14 +105,16 @@ export class UserItemComponent implements OnInit {
    
     var user = firebase.auth().currentUser;
     if(comment!='' || this.rating!=undefined){
-    this.commentService.addItemComment(this.data.item,comment,this.rating,user)
+      if(confirm("Submit comment?")){
+    this.commentService.addItemComment(this.item,comment,this.rating,user)
     .then(res => {
       console.log(res);
-      this.data.component.reload();
-      this.reload();
+      this.data.component.reload(this);
+      //this.reload();
   }, err => {
       console.log(err);
     });
+      }
     }
     else{alert("Comment or rating must have a value");}
   }

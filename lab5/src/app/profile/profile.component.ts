@@ -56,7 +56,7 @@ export class ProfileComponent implements OnInit {
       this.listItems=[];
       this.collectionsData=[];
       this.itemReferences=[];
-      this.collections= collectionService.getCollections();
+      this.collections= collectionService.getCollections(null);
       
     }
 
@@ -96,7 +96,7 @@ export class ProfileComponent implements OnInit {
     this.remainderItems=[];
     
      this.listItems=[];
-   this.itemCollection=this.collectionService.getItems(this.tempListId);
+   this.itemCollection=this.collectionService.getItems(this.tempListId, undefined);
     this.itemReferences=[];
     
      this.itemCollection.get().then(function(querySnapshot) {
@@ -118,7 +118,7 @@ export class ProfileComponent implements OnInit {
   }
   refreshCollections(){
     this.collectionsData=[];
-    this.collections=this.collectionService.getCollections();
+    this.collections=this.collectionService.getCollections(undefined);
     this.collections.get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
        this.collectionsData.push(doc);
@@ -161,11 +161,13 @@ export class ProfileComponent implements OnInit {
     this.addIt=true;
     this.itemIndices.sort();
         var itemHold = JSON.stringify(this.itemArr);
-        itemHold=JSON.parse(itemHold);
+        
+        var temp=Array.from(JSON.parse(itemHold));
+        
       for(var x=this.itemIndices.length-1; x>=0; x--){
-        itemHold.splice(this.itemIndices[x],1);
+        temp.splice(this.itemIndices[x],1);
       }
-      this.remainderItems=itemHold;
+      this.remainderItems=temp;
     
     
   }

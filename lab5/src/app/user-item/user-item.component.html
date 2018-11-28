@@ -5,7 +5,9 @@
   <mat-list>
     <mat-list-item>
       <p class="price" >${{data.item.price}}</p>
-      <input class="quantity" matInput min=1 #quant type="number" value=1>
+   
+      <input  class="quantity" appearance="outline" matInput min=1 #quant type="number" value=1>
+     
 
        <button mat-raised-button class="cartButton" (click)="addCart(data.item, quant.value)">Add to Cart</button>
        </mat-list-item>
@@ -24,20 +26,20 @@
     <mat-dialog-content>
   <mat-list>
       <mat-list-item *ngFor="let num of firstFive"> 
-      <div *ngIf="!data.item.hidden[num]">
+      <div *ngIf="!item.hidden[num]">
      
-        <label matLine>{{data.item.users[num]}}</label>
+        <label matLine>{{item.users[num]}}</label>
         <hr matLine>
        
-        <h3 matLine>{{data.item.ratings[num]}} Stars</h3>
+        <h3 matLine>{{item.ratings[num]}} Stars</h3>
         
-        <p matLine>Comment: {{data.item.comments[num]}}</p>
+        <p matLine>Comment: {{item.comments[num]}}</p>
         <div *ngIf="data.component.isAdmin">
           <button class="button" mat-raised-button (click)="hideComment(num)">Hide Comment </button>
           <button class="button" mat-raised-button (click)="deleteComment(num)">Delete Comment </button>
         </div>
       </div>
-      <div *ngIf="data.item.hidden[num]">
+      <div *ngIf="item.hidden[num]">
         <p>User comment has been hidden</p>
         <div *ngIf="data.component.isAdmin">
           <button class="button" mat-raised-button (click)="showComment(num)">Show Comment </button>
@@ -63,7 +65,9 @@
         Rating : {{rating}} stars  
         <br>
         <br>
+         <mat-form-field appearance="outline">
         <textarea matInput #comment placeholder="Leave a comment"></textarea>
+        </mat-form-field>
         <button mat-raised-button (click)="submitComment(comment.value)">Submit Comment</button>
         <br>
     

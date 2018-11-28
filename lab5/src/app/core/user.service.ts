@@ -38,19 +38,19 @@ export class UserService {
       }, err => reject(err))
     })
   }
-  disableUser(user){
-    return new Promise<any>((resolve, reject) => {
-      var uid = user.id;
-      firebase.auth().updateUser(uid, {
-      disabled: true
-}).then(function(userRecord) {
-    // See the UserRecord reference doc for the contents of userRecord.
-    resolve(userRecord.toJSON())
-  })
-  .catch(function(error) {
-    reject (error);
-  });
+//   disableUser(user){
+//     return new Promise<any>((resolve, reject) => {
+//       var uid = user.id;
+//       firebase.auth().updateUser(uid, {
+//       disabled: true
+// }).then(function(userRecord) {
+//     // See the UserRecord reference doc for the contents of userRecord.
+//     resolve(userRecord.toJSON())
+//   })
+//   .catch(function(error) {
+//     reject (error);
+//   });
     
-    })
-  }
+//     })
+//   }
 }

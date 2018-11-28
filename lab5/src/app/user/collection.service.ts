@@ -41,8 +41,8 @@ export class CollectionService {
   
     }
   getCollections(user){
-    user = this.userDetails || user;
-    var lists=[];
+   user = this.userDetails || user;
+    
    var lists= this.collection.doc(user.uid).collection('Collections');
    return lists;
 

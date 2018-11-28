@@ -11,6 +11,7 @@ import {CartService} from '../cart/cart.service';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import {CollectionService} from './collection.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import {ItemCommentService} from '../user-item/item-comment.service';
 
 
 
@@ -22,9 +23,11 @@ import { AngularFireAuth } from '@angular/fire/auth';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
+  private modalIndex;
   private listDescription;
   private listName;
   private usersData;
+  private itemModal;
   modalItem;
   dialogResult;
   items;
@@ -51,6 +54,7 @@ export class UserComponent implements OnInit {
   
 
   constructor(
+    private itemService : ItemCommentService,
     public dialog: MatDialog, private startServ: StartService,
     public afAuth: AngularFireAuth,
     private router: Router,
@@ -146,8 +150,8 @@ export class UserComponent implements OnInit {
               
               this.userCollection.doc(doc.id).collection('Collections').doc(doc2.id).collection('Items').get().then(function(querySnapshot) {
                 var listData = [];
-                var tempItemList = JSON.stringify(this.itemArr);
-                tempItemList=JSON.parse(tempItemList);
+                var temp = JSON.stringify(this.itemArr);
+                var tempItemList=JSON.parse(temp);
               querySnapshot.forEach(function(doc3) {
                  listData.push(doc3);
                  
@@ -194,7 +198,9 @@ export class UserComponent implements OnInit {
     this.collectionCreate=true;
   }
   
-  reload(){
+  reload(itemDialog){
+    itemDialog = null || itemDialog;
+    this.itemModal = itemDialog;
     var unsortedItems;
      this.itemIDs=[];
     this.tempArr=[];
@@ -244,7 +250,12 @@ export class UserComponent implements OnInit {
     for (var i=0; i<11&&i<itemList.length; i++){
       this.items.push(itemList[i]);
 }
+if(this.itemModal!=null){
+    this.itemModal.item = this.items[this.modalIndex];
+    this.itemModal.reload();
+  
     }
+   }
 
   }
 
@@ -268,14 +279,16 @@ export class UserComponent implements OnInit {
     
   }
   
-  openDialog(item) {
+  openDialog(item, index) {
+    this.modalIndex=index;
 
     this.modalItem=item;
     let dialogRef = this.dialog.open(UserItemComponent, {
       width: '600px',
-      data: {item : item, component: this}
+      data: {item : item, component: this, index: index}
       
     });
+    
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog closed: ${result}`);
       this.dialogResult = result;
@@ -288,7 +301,7 @@ addCart(item, quant){
   this.cartService.addToCart(item,quant)
     .then(res => {
       console.log(res);
-      this.reload();
+      this.reload(undefined);
   }, err => {
       console.log(err);
     });

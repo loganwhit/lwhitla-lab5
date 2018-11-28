@@ -4,10 +4,19 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ItemCommentService {
+  
+  
+  
   url = './api/items/comment/';
   
   constructor() { }
   
+  // setItem(item){
+  //   this.item=item;
+  // }
+  // getItem(){
+  //   return this.item;
+  // }
   addItemComment(item,comment, rating,user){
     var id =item._id;
     var itemUrl = this.url+id;

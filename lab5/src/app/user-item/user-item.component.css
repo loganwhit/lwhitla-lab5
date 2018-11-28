@@ -1,6 +1,6 @@
 .quantity{
     width: 30px;
-    margin-right: 20px;
+    height: 10px;
 }
 .name{
     width: 200px;
@@ -10,6 +10,3 @@
     width: 50px;
 }
 
-.cartButton{
-  
-}

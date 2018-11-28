@@ -24,13 +24,6 @@ export class CartService {
     
     
    
-    //for(var i =0; i<this.cartList.length; i++ ){
-    
-    // for(var i=0; i<this.cartList.length; i++){
-    
-    
-    // var id =this.cartList[0]._id;
-    // var buyUrl = buyUrl+id;
     
     let data={
       cart: this.cartList
@@ -59,7 +52,6 @@ export class CartService {
     })
     
     
-  // }
   
   }
   incrementCart(item,quant){
@@ -100,7 +92,7 @@ export class CartService {
    
     
     let data={
-        quantity: negQuant,
+        quantity: negQuant
     }
    
     
@@ -112,15 +104,15 @@ export class CartService {
         headers:{
         'Content-Type': 'application/json'
   }})
-      .then(res => {
+      .then(function(res) {
         
         resolve(res.json());
         this.getCatalogList();
         
-      }.bind(this)), err => reject(err.json());
+      }.bind(this)), err => reject(err.json())
   
-    }.bind(this));
-    });
+    }.bind(this))
+    })
   
     
   }

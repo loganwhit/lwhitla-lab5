@@ -3,8 +3,9 @@
     right: 5%;
 }
 .quantity{
-   margin: 20px;
+  
     width: 50px;
+    height: 20px;
 }
 .name{
     width: 150px;
