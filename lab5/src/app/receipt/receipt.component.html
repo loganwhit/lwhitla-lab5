@@ -7,11 +7,11 @@
   <mat-list>
       <mat-list-item *ngFor="let item of data.cart"> 
      
-        <label matLine>{{item.name}}</label>
+        <label class="receipt">{{item.name}}</label>
        
-        <label>{{item.quantity}}</label>
+        <label class="receipt">{{item.quantity}}</label>
         
-        <label>${{item.price*item.quantity}}</label>
+        <label class="receipt">${{item.price*item.quantity}}</label>
        
       </mat-list-item>
     </mat-list>

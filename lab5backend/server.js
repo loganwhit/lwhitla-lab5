@@ -9,19 +9,34 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(express.static('./public'));
 
-// var admin = require('firebase-admin');
 
-// var serviceAccount = require('./firebase/se3316-lab5-auth-firebase-adminsdk-h9mgr-f7f01fbb2c.json');
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: "https://se3316-lab5-auth.firebaseio.com"
-// });
-
-// var defaultApp = admin.initializeApp(defaultAppConfig);
-
-// console.log(defaultApp.name);
 
 var port = process.env.Port || 8081;
+
+var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
+
+var tagOrComment = new RegExp( //From https://stackoverflow.com/a/430240
+    '<(?:'
+    // Comment body.
+    + '!--(?:(?:-*[^->])*--+|-?)'
+    // Special "raw text" elements whose content should be elided.
+    + '|script\\b' + tagBody + '>[\\s\\S]*?</script\\s*'
+    + '|style\\b' + tagBody + '>[\\s\\S]*?</style\\s*'
+    // Regular name
+    + '|/?[a-z]'
+    + tagBody
+    + ')>',
+    'gi');
+    
+function removeTags(html) {
+  var oldHtml;
+  do {
+    oldHtml = html;
+    html = String(html).replace(tagOrComment, '');
+  } while (html !== oldHtml);
+  return html.replace(/</g, '&lt;');
+}
+
 
 var router = express.Router();
 //Middleware can be used for authentication
@@ -41,35 +56,35 @@ app.use('/api', router);
 router.route('/items')
     .post(function(req, res){
         var item = new Item();
-        item.name = req.body.name;
+        item.name = removeTags(req.body.name);
       
         
         if(req.body.price != ''){
-            item.price = req.body.price;
+            item.price = removeTags(req.body.price);
         }
         else{
             console.log("Price is mandatory");
             return;
         }
         if(req.body.tax != ''){
-        item.tax = req.body.tax;
+        item.tax = removeTags(req.body.tax);
         }
         else{
             item.tax=0;
         }
         if(req.body.quantity != ''){
-            item.quantity=req.body.quantity;
+            item.quantity=removeTags(req.body.quantity);
         }
         else{
             item.quantity=0;
         }
-        if(req.body.itemsSold== ''){
-            item.itemsSold=0;
-        }
-        else{
-            item.itemsSold=req.body.itemsSold;
-        }
-        item.descript=req.body.descript
+        // if(req.body.itemsSold== ''){
+        //     item.itemsSold=0;
+        // }
+        // else{
+        //     item.itemsSold=req.body.itemsSold;
+        // }
+        item.descript=removeTags(req.body.descript);
         
         item.save(function(err){
             if(err){
@@ -105,19 +120,19 @@ router.route('/items/:item_id')
                 res.send(err);
             }
             if(req.body.name != undefined){
-            item.name = req.body.name;
+            item.name = removeTags(req.body.name);
             }
             if(req.body.descript != undefined){
-            item.descript = req.body.descript;
+            item.descript = removeTags(req.body.descript);
             }
             if(req.body.price != undefined){
-            item.price = req.body.price;
+            item.price = removeTags(req.body.price);
             }
             if(req.body.quantity != undefined){
-            item.quantity = req.body.quantity;
+            item.quantity = removeTags(req.body.quantity);
             }
             if(req.body.tax != undefined){
-                item.tax = req.body.tax;
+                item.tax = removeTags(req.body.tax);
             }
             
             item.save(function(err){
@@ -148,7 +163,7 @@ router.route('/items/comment/:item_id')
                 res.send(err);
             }
             if(req.body.comment != undefined){
-            item.comments.push(req.body.comment);
+            item.comments.push(removeTags(req.body.comment));
             item.hidden.push(false);
             }
             else{
@@ -156,13 +171,13 @@ router.route('/items/comment/:item_id')
                 item.hidden.push(false);
             }
             if(req.body.rating != undefined){
-            item.ratings.push(req.body.rating);
+            item.ratings.push(removeTags(req.body.rating));
             }
             else{
                 item.ratings.push(0);
             }
             if(req.body.user != undefined){
-            item.users.push(req.body.user);
+            item.users.push(removeTags(req.body.user));
             }
             
             item.save(function(err){
@@ -191,7 +206,7 @@ router.route('/items/comment/:item_id')
                 res.json({message: 'Item updated'});
             });
         });
-    });
+    })
   
     
     router.route('/items/comment/unhide/:item_id')
@@ -209,7 +224,7 @@ router.route('/items/comment/:item_id')
                 res.json({message: 'Item updated'});
             });
         });
-        });
+        })
         router.route('/items/comment/delete/:item_id')
         
         .put(function(req,res){
@@ -229,7 +244,7 @@ router.route('/items/comment/:item_id')
                 res.json({message: 'Item updated'});
             });
         });
-    });
+    })
     
     router.route('/items/cart/:item_id')
 .put(function(req,res){
@@ -238,7 +253,7 @@ router.route('/items/comment/:item_id')
                 res.send(err);
             }
             if(req.body.quantity != undefined){
-            item.quantity = item.quantity+req.body.quantity;
+            item.quantity = item.quantity+removeTags(req.body.quantity);
             }
             item.save(function(err){
                 if(err){
@@ -267,7 +282,7 @@ router.route('/items/cartBuy/buy')
     }
     res.json({message: 'Items updated'});
         
-    })
+    });
 
 //Start server
 app.listen(port);
