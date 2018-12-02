@@ -60,20 +60,20 @@ router.route('/items')
       
         
         if(req.body.price != ''){
-            item.price = removeTags(req.body.price);
+            item.price = parseFloat(removeTags(req.body.price));
         }
         else{
             console.log("Price is mandatory");
             return;
         }
         if(req.body.tax != ''){
-        item.tax = removeTags(req.body.tax);
+        item.tax = parseFloat(removeTags(req.body.tax));
         }
         else{
             item.tax=0;
         }
         if(req.body.quantity != ''){
-            item.quantity=removeTags(req.body.quantity);
+            item.quantity=parseInt(removeTags(req.body.quantity));
         }
         else{
             item.quantity=0;
@@ -126,13 +126,13 @@ router.route('/items/:item_id')
             item.descript = removeTags(req.body.descript);
             }
             if(req.body.price != undefined){
-            item.price = removeTags(req.body.price);
+            item.price =parseFloat( removeTags(req.body.price));
             }
             if(req.body.quantity != undefined){
-            item.quantity = removeTags(req.body.quantity);
+            item.quantity =parseInt( removeTags(req.body.quantity));
             }
             if(req.body.tax != undefined){
-                item.tax = removeTags(req.body.tax);
+                item.tax = parseFloat(removeTags(req.body.tax));
             }
             
             item.save(function(err){
@@ -171,7 +171,7 @@ router.route('/items/comment/:item_id')
                 item.hidden.push(false);
             }
             if(req.body.rating != undefined){
-            item.ratings.push(removeTags(req.body.rating));
+            item.ratings.push(req.body.rating);
             }
             else{
                 item.ratings.push(0);
@@ -253,7 +253,7 @@ router.route('/items/comment/:item_id')
                 res.send(err);
             }
             if(req.body.quantity != undefined){
-            item.quantity = item.quantity+removeTags(req.body.quantity);
+            item.quantity = item.quantity+parseInt(removeTags(req.body.quantity));
             }
             item.save(function(err){
                 if(err){
