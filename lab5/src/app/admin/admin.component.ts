@@ -5,6 +5,11 @@ import {AuthService} from '../core/auth.service'
 import {Router} from '@angular/router';
 import {UserService} from '../core/user.service';
 import {StartService} from '../start/start.service';
+import {PolicyService} from '../policy/policy.service';
+import {DMCAService} from '../dmca/dmca.service';
+import * as firebase from 'firebase/app';
+import { AngularFirestore } from '@angular/fire/firestore';
+import {ItemCommentService} from '../user-item/item-comment.service';
 
 
 @Component({
@@ -17,19 +22,44 @@ export class AdminComponent implements OnInit {
   public collection;
   users;
   upItem;
+  policy;
+  DMCA;
   updateItem:FormGroup;
+  userReports;
+  db;
+  items;
+  hiddenReports;
+  
+  
  private items;
   constructor(private fb: FormBuilder,
   private userService: UserService,
   private router: Router,
   private adminServ : AdminService,
   private authService: AuthService,
-  private startService : StartService) {
+  private startService : StartService,
+  private polService : PolicyService,
+  private DMCAService : DMCAService,
+  private itemService :ItemCommentService) {
       this.users=[];
+      this.userReports=[];
        this.createForm();
        this.setUsers();
        this.getItems();
        this.upItem=null;
+       this.policy=polService.getPolicy();
+       this.DMCA=DMCAService.getDMCA();
+      this.db=firebase.firestore();
+      this.db.collection("reports").get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          let data={id: doc.id,
+          commentNumbers: doc.data()}
+        this.userReports.push(data);
+    }.bind(this));
+    // console.log(this.userReports[0].commentNumbers);
+}.bind(this));
+
+       
        
        
 
@@ -58,6 +88,13 @@ export class AdminComponent implements OnInit {
     // if(this.userService.getCurrentUser()){
     //   this.router.navigate(['/login']);
     // }
+  }
+  setPolicy(policy){
+    this.polService.setPolicy(policy);
+    
+  }
+  setDMCA(DMCA){
+    this.DMCAService.setDMCA(DMCA);
   }
   setUsers(){
     this.users=[];
@@ -179,5 +216,36 @@ export class AdminComponent implements OnInit {
       console.log("Logout error", error);
     });
   }
+  getComment(id,num){
+    for(var i=0; i<this.items.length; i++){
+      if(this.items[i]._id==id){
+        return this.items[i].comments[num];
+      }
+    }
+  }
+  hideComment(id,num){
+    for(var i=0; i<this.items.length; i++){
+      if(this.items[i]._id==id){
+        this.itemService.hideItemComment(this.items[i],num);
+      }
+    }
+    
+  }
+  getHidden(id,num){
+    for(var i=0; i<this.items.length; i++){
+      if(this.items[i]._id==id){
+       return this.items[i].hidden[num];
+      }
+  }
+  
 
+}
+showComment(id,num){
+    for(var i=0; i<this.items.length; i++){
+      if(this.items[i]._id==id){
+        this.itemService.showItemComment(this.items[i],num);
+      }
+    }
+    
+  }
 }

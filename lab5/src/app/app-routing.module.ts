@@ -9,7 +9,9 @@ import { UserResolver } from './user/user.resolver';
 import {StartComponent} from './start/start.component';
 import {AdminComponent} from './admin/admin.component';
 import {ProfileComponent} from './profile/profile.component';
-import {CartComponent} from './cart/cart.component'
+import {CartComponent} from './cart/cart.component';
+import {PolicyComponent} from './policy/policy.component';
+import {DMCAComponent} from './dmca/dmca.component';
 
 
 const routes: Routes = [
@@ -20,7 +22,11 @@ const routes: Routes = [
   { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard]},
   { path: 'cart' , component: CartComponent, canActivate:[AuthGuard]},
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard],  resolve: { data: UserResolver}}
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard],  resolve: { data: UserResolver}},
+  { path: 'policy', component: PolicyComponent},
+  { path: 'DMCA', component: DMCAComponent}
+  
+  
 ];
 
 @NgModule({

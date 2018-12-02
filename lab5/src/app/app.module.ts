@@ -31,6 +31,8 @@ import {MatSelectModule} from '@angular/material/select';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { ReceiptComponent } from './receipt/receipt.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { PolicyComponent } from './policy/policy.component';
+import { DMCAComponent } from './dmca/dmca.component';
 
 
 
@@ -48,6 +50,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     UserItemComponent,
     CartComponent,
     ReceiptComponent,
+    PolicyComponent,
+    DMCAComponent,
    
     
   

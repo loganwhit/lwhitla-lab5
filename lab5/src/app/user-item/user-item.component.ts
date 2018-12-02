@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA} from '@angular/material';
 import {MatDialogRef} from '@angular/material';
 import {ItemCommentService} from './item-comment.service'
 import * as firebase from 'firebase/app';
+import { AngularFirestore } from '@angular/fire/firestore';
 import {CartService} from '../cart/cart.service';
 import {UserComponent} from '../user/user.component';
 
@@ -16,10 +17,12 @@ export class UserItemComponent implements OnInit {
   numbers;
   firstFive;
   item;
+  db;
   constructor(public thisDialogRef: MatDialogRef<UserItemComponent>, 
   @Inject(MAT_DIALOG_DATA) public data, 
   private commentService : ItemCommentService,
   private cartService : CartService) { 
+    this.db=firebase.firestore();
     this.item=this.data.item;
     this.showCommentField=false;
     this.numbers = Array(this.item.comments.length).fill(1).map((x,i)=>i);
@@ -121,9 +124,9 @@ export class UserItemComponent implements OnInit {
   onCloseConfirm() {
     this.thisDialogRef.close('Confirm');
   }
-  onCloseCancel() {
-    this.thisDialogRef.close('Cancel');
-  }
+  // onCloseCancel() {
+  //   this.thisDialogRef.close('Cancel');
+  // }
   addCart(item, quant){
   this.cartService.addToCart(item,quant)
     .then(res => {
@@ -133,6 +136,24 @@ export class UserItemComponent implements OnInit {
       console.log(err);
     });
   
+}
+  report(num, item){
+  const settings = {timestampsInSnapshots: true};
+  this.db.settings(settings);
+  var collection = this.db.collection("reports");
+  // collection("ItemReports").doc(num.toString())
+  collection.doc(item._id).set({
+      ['commentNumber'+num.toString()] : num},
+      { merge: true })
+        .then(function() {
+            console.log("Document successfully written!");
+           
+        }.bind(this))
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+    
+  }
 }
  
 }

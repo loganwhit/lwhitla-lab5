@@ -26,7 +26,7 @@ export class StartItemComponent implements OnInit {
   onCloseConfirm() {
     this.thisDialogRef.close('Confirm');
   }
-  onCloseCancel() {
-    this.thisDialogRef.close('Cancel');
-  }
+  // onCloseCancel() {
+  //   this.thisDialogRef.close('Cancel');
+  // }
 }

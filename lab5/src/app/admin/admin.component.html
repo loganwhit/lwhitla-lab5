@@ -133,3 +133,33 @@
 
        </mat-list-item>
        </mat-list>
+       
+<h3>Policy</h3>
+
+<mat-form-field class="policyEntry">
+<textarea matInput matTextareaAutosize type="text" class="policyEntry" #policyEntry [(ngModel)]="policy"></textarea>
+</mat-form-field>
+<button (click)="setPolicy(policyEntry.value)">Set Policy</button>
+<br>
+<h3>DMCA Takedown Policy</h3>
+
+<mat-form-field class="policyEntry">
+<textarea matInput matTextareaAutosize type="text" class="policyEntry" #DMCAEntry [(ngModel)]="DMCA"></textarea>
+</mat-form-field>
+<button (click)="setDMCA(DMCAEntry.value)">Set DMCA</button>
+
+<h3>Review Reports</h3>
+<mat-list>
+<mat-list-item *ngFor="let report of userReports"> 
+  <mat-list-item matLine *ngFor="let num of report.commentNumbers | keyvalue">
+        
+        <p class="comment">{{getComment(report.id, num.value)}}</p>
+        <div *ngIf="!getHidden(report.id,num.value)">
+        <button (click)="hideComment(report.id,num.value)">Hide Comment</button>
+        </div>
+        <div *ngIf="getHidden(report.id,num.value)">
+        <button (click)="showComment(report.id,num.value)">Show Comment</button>
+        </div>
+      </mat-list-item>
+  </mat-list-item>
+</mat-list>
