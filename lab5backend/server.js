@@ -78,8 +78,8 @@ router.route('/items')
         else{
             item.quantity=0;
         }
-        // if(req.body.itemsSold== ''){
-        //     item.itemsSold=0;
+    
+            item.itemsSold=0;
         // }
         // else{
         //     item.itemsSold=req.body.itemsSold;

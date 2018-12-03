@@ -74,10 +74,17 @@
     
     <div *ngIf="showMore">
     <mat-list>
+        <mat-list-item>
+            <p class="name">Name</p>
+             <p class="price">Price</p>
+            <p class="quantity">Quantity</p>
+           
+        </mat-list-item>
+        <mat-list-item *ngFor="let item of itemArr; let i=index"> 
         <div *ngIf="item.quantity>0">
-        <mat-list-item *ngFor="let item of itemArr"> 
+        <mat-list-item>
        <!--<a routerLink {{item.name}} -->
-       <a (click)="openDialog(item)">{{item.name}}</a>
+       <a class="name" (click)="openDialog(item,i)">{{item.name}}</a>
        <p class="price" >${{item.price}}</p>
         <p class="quantityRem">{{item.quantity}}</p>
        
@@ -88,8 +95,10 @@
        <div *ngIf="collectionCreate">
        <button mat-raised-button class="cartButton" (click)="addToCollection(item, quant.value)">Add to Collection</button>
        </div>
+       </mat-list-item>
+       </div>
         </mat-list-item>
-        </div>
+        
     </mat-list>
     <div *ngIf="itemArr.length>10">
     <button mat-button (click) = showOrHide()>Hide</button>

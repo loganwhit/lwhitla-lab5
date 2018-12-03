@@ -17,7 +17,8 @@ Specific identification of the location and description of the material that is 
 Information reasonably sufficient to allow Log's Goods to contact the complaining party which may include a name, address, telephone number and electronic mail address at which the complaining party may be contacted.
 A statement that the complaining party has a good faith belief that use of the material in the manner complained of is not authorized by the copyright owner, its agent or the law.
 A statement that the information in the notification is accurate, and under penalty of perjury that the complaining party is authorized to act on behalf of the owner of an exclusive right that is allegedly infringed.
-Please also note that under applicable law, 17 U.S.C. 512(f), any person who knowingly materially misrepresents that material or activity is infringing may be subject to liability.`}
+Please also note that under applicable law, 17 U.S.C. 512(f), any person who knowingly materially misrepresents that material or activity is infringing may be subject to liability.
+Send any infringements to logan.whitla@gmail.com or report using the site.`}
 
 getDMCA(){
     return this.DMCA; //Returns DMCA to caller

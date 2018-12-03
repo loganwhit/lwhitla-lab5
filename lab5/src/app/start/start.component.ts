@@ -97,7 +97,7 @@ export class StartComponent implements OnInit {
    else{
    this.items=[];
     this.itemArr=itemList;
-    for (var i=0; i<11&&i<itemList.length; i++){
+    for (var i=0; i<10&&i<itemList.length; i++){
       this.items.push(itemList[i]);
     }
 

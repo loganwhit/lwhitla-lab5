@@ -256,11 +256,11 @@ export class UserComponent implements OnInit {
    else{
     this.items=[];
     this.itemArr=itemList;
-    for (var i=0; i<11&&i<itemList.length; i++){
+    for (var i=0; i<10&&i<itemList.length; i++){
       this.items.push(itemList[i]);
 }
 if(this.itemModal!=null){
-    this.itemModal.item = this.items[this.modalIndex];
+    this.itemModal.item = this.itemArr[this.modalIndex];
     this.itemModal.reload(); //Reloads modal
   
     }
