@@ -8,6 +8,7 @@ import {DMCAService} from './dmca.service';
 })
 export class DMCAComponent implements OnInit {
 private DMCA;
+//Sets DMCA to value from DMCAService
   constructor(private dmcaService : DMCAService) {
     this.DMCA=this.dmcaService.getDMCA()}
 

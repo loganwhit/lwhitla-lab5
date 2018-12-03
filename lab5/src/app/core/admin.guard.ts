@@ -15,6 +15,8 @@ export class AdminGuard implements CanActivate {
     public userService: UserService,
     private router: Router,
     private authService: AuthService){}
+    
+    //Protects a route from being activated if user is not a registered admin
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {

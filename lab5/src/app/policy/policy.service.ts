@@ -7,6 +7,7 @@ export class PolicyService {
   policy;
 
   constructor() {
+    //Initial policy
     this.policy=` 
     <h1>Privacy Policy</h1>
 
@@ -116,10 +117,11 @@ export class PolicyService {
     
     
   }
-  
+  //Gets policy from PolicyService
   getPolicy(){
     return this.policy;
   }
+  //Sets policy equivalent to parameter policy
   setPolicy(policy){
     this.policy=policy;
   }

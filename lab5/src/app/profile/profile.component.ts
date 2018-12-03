@@ -44,6 +44,7 @@ export class ProfileComponent implements OnInit {
       this.addIt=false;
       this.itemIDs=[];
       this.itemArr=[];
+      //Gets all items and pushes item ids into their own array
       startService.getAll().then(function(res){
         for(var i=0; i<res.length; i++){
           this.itemIDs.push(res[i]._id);
@@ -59,7 +60,15 @@ export class ProfileComponent implements OnInit {
       this.collections= collectionService.getCollections(null);
       
     }
+    
+    //User lists/collections are stored in firebase
+    //The values stored are the item ids and quantities
+    //The list of items from the Mongo database is used to fill in the remaining values
+    
+    //Firebase Auth Source
+//https://github.com/AngularTemplates/firebase-authentication-with-angular-5
 
+// https://angular-templates.io/tutorials/about/firebase-authentication-with-angular?fbclid=IwAR2BLHKp-FbK40yG9pTvU_96bgHduq10vmgHCM7FSVKbdEay8UYP8j7wcKs 
   ngOnInit() {
     // if(this.userService.getCurrentUser()){
     //   this.router.navigate(['/login']);
@@ -75,6 +84,8 @@ export class ProfileComponent implements OnInit {
   // isAdmin(){
   //   // if(this.userService.getCurrentUser())
   // }
+  
+  //Opens a selected collection
   openCollection(list){
     
     this.tempListId=list.id;
@@ -90,6 +101,7 @@ export class ProfileComponent implements OnInit {
    
     
   }
+  //Refreshes item array and item indicses
   refreshItems(){
     this.itemIndices=[];
     this.addIt=false;
@@ -116,6 +128,7 @@ export class ProfileComponent implements OnInit {
     }.bind(this));
     
   }
+  //Refreshes collections
   refreshCollections(){
     this.collectionsData=[];
     this.collections=this.collectionService.getCollections(undefined);
@@ -126,11 +139,13 @@ export class ProfileComponent implements OnInit {
         }.bind(this));
     }.bind(this));
   }
+  //Creates form for entering user name
   createForm(name) {
     this.profileForm = this.fb.group({
       name: [name, Validators.required ]
     });
   }
+  //Saves user display name
   save(value){
     this.userService.updateCurrentUser(value)
     .then(res => {
@@ -140,6 +155,7 @@ export class ProfileComponent implements OnInit {
   // createCollection(id){
     
   // }
+  //Logs user out
   logout(){
     this.authService.doLogout()
     .then((res) => {
@@ -149,6 +165,7 @@ export class ProfileComponent implements OnInit {
       console.log("Logout error", error);
     });
   }
+  //Removes item from list/collection
   removeItem(item){
     this.itemCollection.doc(item._id).delete().then(function() {
     console.log("Document successfully deleted!");
@@ -157,6 +174,7 @@ export class ProfileComponent implements OnInit {
     console.error("Error removing document: ", error);
     });
   }
+  //Opens select/option form for adding a new item to a collection/list
   addItem(){
     this.addIt=true;
     this.itemIndices.sort();
@@ -171,12 +189,14 @@ export class ProfileComponent implements OnInit {
     
     
   }
+  //Adds an item from select/option to collection/list
   addCollectionItem(item){
     this.itemCollection.doc(item._id).set({
       quantity: "1"}, {merge: true}).then(function(res){
         this.refreshItems();
       }.bind(this))
   }
+  //Saves list
   saveList(){
     
     
@@ -197,6 +217,7 @@ export class ProfileComponent implements OnInit {
       
       
   }
+  //Deletes a list
   deleteList(){
     var listItemIDs=[];
     for(var i=0; i<this.itemReferences.length; i++){

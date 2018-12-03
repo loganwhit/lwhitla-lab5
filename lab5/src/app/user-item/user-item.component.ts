@@ -36,6 +36,7 @@ export class UserItemComponent implements OnInit {
   }
   ngOnInit() {
   }
+  //Refreshes dialog
   reload(){
    
     this.numbers = Array(this.item.comments.length).fill(1).map((x,i)=>i);
@@ -47,12 +48,13 @@ export class UserItemComponent implements OnInit {
       this.firstFive=this.numbers;
     }
   }
+  
   title = 'Rating';  
   starList: boolean[] = [true,true,true,true,true];       // create a list which contains status of 5 stars
   rating;  
-  //Create a function which receives the value counting of stars click, 
-  //and according to that value we do change the value of that star in list.
-  setStar(data:any){
+  //Create a function which receives the value counting of stars clicked, 
+  //According to that value we change the value of the star in the starList.
+  setStar(data:any){ //https://www.c-sharpcorner.com/article/star-rating-in-angular-5/     Used for implementing star based ratings
       this.rating=data+1;                               
       for(var i=0;i<=4;i++){  
         if(i<=data){  
@@ -63,6 +65,7 @@ export class UserItemComponent implements OnInit {
         }  
      }  
  }  
+ //Opens up the area for submitting comments
   addComment(){
     if(this.showCommentField==false){
       this.showCommentField=true;
@@ -71,7 +74,7 @@ export class UserItemComponent implements OnInit {
       this.showCommentField=false;
     }
   }
-  
+  //Hides a comment - only accesible by an admin
   hideComment(index){
      this.commentService.hideItemComment(this.item,index)
     .then(res => {
@@ -82,6 +85,7 @@ export class UserItemComponent implements OnInit {
       console.log(err);
     });
   }
+  //Deletes a comment - only accessible by an admin
   deleteComment(index){
     this.commentService.deleteItemComment(this.item,index)
     .then(res => {
@@ -92,6 +96,7 @@ export class UserItemComponent implements OnInit {
       console.log(err);
     });
   }
+  //Show comment - only accessible by an admin
   showComment(index){
     this.commentService.showItemComment(this.item,index)
     .then(res => {
@@ -103,11 +108,11 @@ export class UserItemComponent implements OnInit {
     });
   }
 
-  
+  //User can submit a comment
   submitComment(comment){
    
     var user = firebase.auth().currentUser;
-    if(comment!='' || this.rating!=undefined){
+    if(comment!='' || this.rating!=undefined){ //Comment and rating most not both be undefined/empty
       if(confirm("Submit comment?")){
     this.commentService.addItemComment(this.item,comment,this.rating,user)
     .then(res => {
@@ -121,12 +126,14 @@ export class UserItemComponent implements OnInit {
     }
     else{alert("Comment or rating must have a value");}
   }
+  //Closes dialog
   onCloseConfirm() {
     this.thisDialogRef.close('Confirm');
   }
   // onCloseCancel() {
   //   this.thisDialogRef.close('Cancel');
   // }
+  //Adds an item to cart
   addCart(item, quant){
   this.cartService.addToCart(item,quant)
     .then(res => {
@@ -137,6 +144,7 @@ export class UserItemComponent implements OnInit {
     });
   
 }
+//User can report innapropriate and against DMCA comments
   report(num, item){
   const settings = {timestampsInSnapshots: true};
   this.db.settings(settings);

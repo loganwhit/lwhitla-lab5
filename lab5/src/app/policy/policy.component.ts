@@ -8,7 +8,7 @@ import {PolicyService} from './policy.service';
 })
 export class PolicyComponent implements OnInit {
 private policy;
-
+//Similar to DMCA. Sets policy equal to policy from PolicyService
   constructor(private polService : PolicyService) {
     this.policy= this.polService.getPolicy();
     }

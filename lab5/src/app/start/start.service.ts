@@ -7,7 +7,7 @@ export class StartService {
   private url = './api/items';
 
   constructor() { }
-
+//Service function for getting all items
   getAll(){
     return new Promise<any>((resolve, reject) => {
       fetch(this.url)

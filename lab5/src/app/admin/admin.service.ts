@@ -12,6 +12,7 @@ export class AdminService {
     
     
   }
+  //Service function for deleting an item from the database
   deleteItem(item){
     var deleteUrl = this.url+'/'+item._id;
     return new Promise<any>((resolve, reject) => {
@@ -31,7 +32,7 @@ export class AdminService {
     })
 
   }
-  
+  //Service function for adding an item to the database
   addItem(value){
     
      let data = {
@@ -59,6 +60,7 @@ export class AdminService {
     })
 
   }
+  //Service function for updating an item
   updateItem(value, id){
     var itemUrl = this.url+'/'+id;
      let data = {

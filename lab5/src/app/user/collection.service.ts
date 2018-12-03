@@ -25,6 +25,7 @@ export class CollectionService {
         (user) => {
           if (user) {
             this.userDetails = user;
+            //Gets number of collections
              this.counter=this.collection.doc(this.userDetails.uid).collection('Collections').get().then(snap => {
               this.counter = snap.size;
               });
@@ -40,6 +41,7 @@ export class CollectionService {
     
   
     }
+    //Gets collections of logged in user or passed parameter user
   getCollections(user){
    user = this.userDetails || user;
     
@@ -47,18 +49,22 @@ export class CollectionService {
    return lists;
 
   }
+  //Get items using collection id and user id which is either the current user or a passed user parameter
   getItems(id, user){
     user = this.userDetails || user;
     var items = this.collection.doc(user.uid).collection('Collections').doc(id).collection('Items');
     return items;
   }
+  //Adds a collection
   
   addCollection(itemList, name, description, isPublic){
   
     
     
     // var user = firebase.auth().currentUser();
+    //Sets collection to an id that increments for each collection (counter)
     this.collection.doc(this.userDetails.uid).collection('Collections').doc(this.counter.toString()).set({
+      //Sets collection name, description, and public status
   name: name,
   description: description,
   isPublic: isPublic
@@ -68,7 +74,7 @@ export class CollectionService {
   this.collection.doc(this.userDetails.uid).collection('Collections').doc(this.counter.toString()).collection('Items').doc(itemList[i]._id).set({
   quantity: itemList[i].quantity}, { merge: true })
   }
-  this.counter++;
+  this.counter++; //Increments counter
 }.bind(this))
     
   }

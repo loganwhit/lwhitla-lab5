@@ -23,17 +23,17 @@ export class StartComponent implements OnInit {
     this.itemArr=[];
     this.items=[];
     var unsortedItems;
-    unsortedItems = this.startServ.getAll()
+    unsortedItems = this.startServ.getAll() //Gets all items
     .then(res => {
       console.log(res);
       for(var x in res){
         
       
-      this.itemArr.push(res[x]);
+      this.itemArr.push(res[x]); //Pushes items to itemArr
     }
     try{
       
-    this.sortItems(this.itemArr);
+    this.sortItems(this.itemArr); //Sorts items by number of items sold
     }
     catch(err){
       console.log(err);
@@ -45,8 +45,8 @@ export class StartComponent implements OnInit {
     // setInterval(this.reload.bind(this),5000);
     
    }
-   
-   reload(){
+   //Refreshes itemArr
+   reload(){ 
      var unsortedItems;
     
      this.tempArr=[];
@@ -74,6 +74,7 @@ export class StartComponent implements OnInit {
 
   ngOnInit() {
   }
+  //Selects whether to show all items or just the most popular 10
   showOrHide(){
     if(this.showMore==true){
       this.showMore=false;
@@ -82,7 +83,7 @@ export class StartComponent implements OnInit {
       this.showMore=true;
     }
   }
-  
+  //Sorts items by items sold
   sortItems(itemList){
     
     itemList.sort(function(a,b){
@@ -103,6 +104,7 @@ export class StartComponent implements OnInit {
     }
 
   }
+  //Opens a dialog with item descriptions and comments
   openDialog(item) {
     
     let dialogRef = this.dialog.open(StartItemComponent, {

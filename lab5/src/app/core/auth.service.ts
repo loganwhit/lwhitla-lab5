@@ -49,6 +49,8 @@ export class AuthService {
   //       let newUser = new User(uid,isAdmin);
   //       this.usersDB.push(newUser);
   //   }
+  
+  //Adds user to firestore database
   addUser(userResp){
 
   
@@ -69,6 +71,7 @@ export class AuthService {
         });
         
   }
+  //Gets user properties from firestore database
   getUser(userResp){
     const settings = {timestampsInSnapshots: true};
   this.db.settings(settings);
@@ -76,6 +79,7 @@ export class AuthService {
   return collection.doc(userResp.uid);
   
   }
+  //Same thing as above except returns a promise
   getUserPromise(uid){
     return new Promise<any>((resolve, reject) => {
       const settings = {timestampsInSnapshots: true};
@@ -88,6 +92,7 @@ export class AuthService {
     });
     
   }
+  //Gets all users from firestore database
   getAllUsers(){
     const settings = {timestampsInSnapshots: true};
   this.db.settings(settings);
@@ -95,6 +100,11 @@ export class AuthService {
   return collection;
   
   }
+  //Registers a user in firebase authentication
+//   https://github.com/AngularTemplates/firebase-authentication-with-angular-5
+
+// https://angular-templates.io/tutorials/about/firebase-authentication-with-angular?fbclid=IwAR2BLHKp-FbK40yG9pTvU_96bgHduq10vmgHCM7FSVKbdEay8UYP8j7wcKs 
+//Above sources were used for most of firebase authentication
   doRegister(value){
     return new Promise<any>((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
@@ -121,7 +131,7 @@ export class AuthService {
       
     })
   }
- 
+ //Checks to see if a user is logged in
   isLoggedIn() {
   if (this.userDetails == null ) {
       return false;
@@ -129,7 +139,8 @@ export class AuthService {
       return true;
     }
   }
-
+//Logs the user in 
+//Used same sources as doRegister
   doLogin(value, emailVer){
     emailVer = false || emailVer;
     return new Promise<any>((resolve, reject) => {
@@ -153,7 +164,7 @@ export class AuthService {
         ref.get().then(function(res){
           
            if(res.exists){
-            if(!(res.data().active)){
+            if(!(res.data().active)){ //Checks to see if a user is disabled
             alert("User is disabled. Please contact a manager");
             this.doLogout();
           }
@@ -171,7 +182,8 @@ export class AuthService {
       }, err => reject(err))
     })
   }
-
+//Logs a user out
+//Used same sources as doRegister and doLogin
   doLogout(){
     return new Promise((resolve, reject) => {
       

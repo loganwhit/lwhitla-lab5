@@ -52,7 +52,7 @@ export class UserComponent implements OnInit {
   private publicViewList;
 
   
-
+//If not explicitly provided a source, any firebase firestore functionality used the firestore documentation
   constructor(
     private itemService : ItemCommentService,
     public dialog: MatDialog, private startServ: StartService,
@@ -77,7 +77,7 @@ export class UserComponent implements OnInit {
     this.collectionCreate=false;
     this.collectionItems=[];
     var context = this;
-    
+    //Gets current user
     userService.getCurrentUser()
     .then(res => {
       var docRef = authService.getUser(res);
@@ -105,6 +105,7 @@ export class UserComponent implements OnInit {
    
     
     var unsortedItems;
+    //Gets all items
     unsortedItems = this.startServ.getAll()
     .then(res => {
       console.log(res);
@@ -114,9 +115,10 @@ export class UserComponent implements OnInit {
       this.itemIDs.push(res[x]._id);
       
     }
+    //Gets public collections
     this.getPublicCollections();
     try{
-      
+      //Sorts items
     this.sortItems(this.itemArr);
     }
     catch(err){
@@ -135,6 +137,7 @@ export class UserComponent implements OnInit {
     // }
 
   }
+  //Gets public collections and sets values to usersData, collectionLists, and collectionProperties
   getPublicCollections(){
     this.usersData=[];
       this.collectionsLists=[];
@@ -179,25 +182,29 @@ export class UserComponent implements OnInit {
     }.bind(this));
 }.bind(this));
   }
+  //Add a collection to user list of collections
   addCollection(name, description, isPublic){
     this.collectionsService.addCollection(this.collectionItems,name, description, isPublic);
   }
+  //Add an item to a collection
   addToCollection(item, quantity){
+    //JSON stringify/parse were used so quantity was not changed in itemArr
    var holdItem = JSON.stringify(item);
     var tempItem = JSON.parse(holdItem);
     tempItem.quantity=quantity;
     this.collectionItems.push(tempItem);
   }
+  //Removes an item from a collection
   removeItem(item){
    var index = this.collectionItems.indexOf(item);
    this.collectionItems.splice(index,1);
   
   }
-
+//Initializes the creation of a collection
   createCollection(){
     this.collectionCreate=true;
   }
-  
+  //reloads the items and id arrays and the item dialog if passed
   reload(itemDialog){
     itemDialog = null || itemDialog;
     this.itemModal = itemDialog;
@@ -226,6 +233,7 @@ export class UserComponent implements OnInit {
     });
      
   }
+  //Same as StartComponent, hides or shows items past most popular 10
   showOrHide(){
     if(this.showMore==true){
       this.showMore=false;
@@ -234,6 +242,7 @@ export class UserComponent implements OnInit {
       this.showMore=true;
     }
   }
+  //Sorts items by most popular using items sold
   sortItems(itemList){
     
     itemList.sort(function(a,b){
@@ -252,13 +261,13 @@ export class UserComponent implements OnInit {
 }
 if(this.itemModal!=null){
     this.itemModal.item = this.items[this.modalIndex];
-    this.itemModal.reload();
+    this.itemModal.reload(); //Reloads modal
   
     }
    }
 
   }
-
+//Logs user out
   logout(){
     this.authService.doLogout()
     .then((res) => {
@@ -268,6 +277,7 @@ if(this.itemModal!=null){
       console.log("Logout error", error);
     });
   }
+  //Opens a collection based upon selection
   openCollection(index){
     this.publicViewList=true;
     this.listName=this.collectionProperties[index].data().name;
@@ -278,7 +288,9 @@ if(this.itemModal!=null){
     
     
   }
-  
+  //Opens an item dialog that shows description and comments
+  //Allows users to comment on items and provide ratings
+  //Also allows users to add items to cart from dialog
   openDialog(item, index) {
     this.modalIndex=index;
 
@@ -297,6 +309,7 @@ if(this.itemModal!=null){
   
 
 }
+//Adds an item to the cart
 addCart(item, quant){
   this.cartService.addToCart(item,quant)
     .then(res => {

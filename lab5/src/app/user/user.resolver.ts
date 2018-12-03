@@ -5,7 +5,12 @@ import { FirebaseUserModel } from '../core/user.model';
 
 @Injectable()
 export class UserResolver implements Resolve<FirebaseUserModel> {
+//Used for retrieving data on user profile
+//Also functions as a route guard
+//Firebase Auth Source
+//https://github.com/AngularTemplates/firebase-authentication-with-angular-5
 
+// https://angular-templates.io/tutorials/about/firebase-authentication-with-angular?fbclid=IwAR2BLHKp-FbK40yG9pTvU_96bgHduq10vmgHCM7FSVKbdEay8UYP8j7wcKs 
   constructor(public userService: UserService, private router: Router) { }
 
   resolve(route: ActivatedRouteSnapshot) : Promise<FirebaseUserModel> {

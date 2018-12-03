@@ -16,6 +16,7 @@ export class AuthGuard implements CanActivate {
     private authService: AuthService
     
   ) {}
+  //Checks to see if user is logged in
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean { //https://itnext.io/step-by-step-complete-firebase-authentication-in-angular-2-97ca73b8eb32

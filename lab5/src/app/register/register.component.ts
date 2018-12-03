@@ -11,6 +11,11 @@ export interface User { uid: string, isAdmin: boolean }
   styleUrls: ['./register.component.css']
 
 })
+//Firebase Auth Source
+//https://github.com/AngularTemplates/firebase-authentication-with-angular-5
+
+// https://angular-templates.io/tutorials/about/firebase-authentication-with-angular?fbclid=IwAR2BLHKp-FbK40yG9pTvU_96bgHduq10vmgHCM7FSVKbdEay8UYP8j7wcKs 
+//Used for registering a user
 export class RegisterComponent implements OnInit {
   // private userDoc: AngularFirestoreDocument<User>;
   // items: Observable<any[]>;
@@ -33,6 +38,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
   }
+  //Creates a form for registering a user with an email and a password
   createForm() {
     this.registerForm = this.fb.group({
       email: ['', Validators.required ],
@@ -40,10 +46,10 @@ export class RegisterComponent implements OnInit {
     });
   }
   
-  
+  //Registers a user 
   tryRegister(value,verPass){
    
-    if (!(value.password==verPass))
+    if (!(value.password==verPass)) //Checks to see if password matches the re-rentry
     {
       alert("Please make sure passwords match");
       return;

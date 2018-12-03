@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class DMCAService {
  DMCA;
   constructor() {
+      //Initializes DMCA as below value
     this.DMCA = `Log's Goods is an online service provider as defined in the Digital Millennium Copyright Act. We provide legal copyright owners with the ability to self-publish on the internet by uploading, storing and displaying various media utilizing our services. We do not monitor, screen or otherwise review the media which is uploaded to our servers by users of the service. We take copyright violation very seriously and will vigorously protect the rights of legal copyright owners. If you are the copyright owner of content which appears on the Log's Goods website and you did not authorize the use of the content you must notify Log's Goods in writing in order for us to identify the allegedly infringing content and take action.
 
 In order to more easily facilitate the process we have provided a form for your use on our contact us page. We will be unable to take any action if you do not provide us with the required information so please fill out all fields accurately and completely. Alternatively you may make a written notice via email, facsimile or postal mail to the DMCA AGENT as listed below. Your written notice must include the following:
@@ -19,10 +20,10 @@ A statement that the information in the notification is accurate, and under pena
 Please also note that under applicable law, 17 U.S.C. 512(f), any person who knowingly materially misrepresents that material or activity is infringing may be subject to liability.`}
 
 getDMCA(){
-    return this.DMCA;
+    return this.DMCA; //Returns DMCA to caller
     }
 setDMCA(DMCA){
-    this.DMCA=DMCA;
+    this.DMCA=DMCA; // Sets DMCA to DMCA value
   
     }
 }

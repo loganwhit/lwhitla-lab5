@@ -20,7 +20,7 @@ export class CartComponent implements OnInit {
 
   constructor(private cartService : CartService, private authService: AuthService, private router : Router, private dialog : MatDialog,
   ) {this.cartList=this.cartService.getCart();
-  this.numbers = Array(10).fill(1).map((x,i)=>i);
+  this.numbers = Array(10).fill(1).map((x,i)=>i); //Initializes an array to hold a number from 0-9
     this.minusTen=true;
     
     this.getSum();
@@ -32,8 +32,9 @@ export class CartComponent implements OnInit {
       this.sumTotal += parseFloat(this.cartList[i].quantity)*parseFloat(this.cartList[i].price); 
     }
   }
+  //Function for buying an item using CartService
   buy(){
-    if(confirm("Are you sure you want to buy?")){
+    if(confirm("Are you sure you want to buy?")){ //Requests confirmation
       
     this.cartService.buy()
     .then(res => {
@@ -52,12 +53,15 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
   }
+  //Gets cart from CartService
   getCart(){
     this.cartList=this.cartService.getCart();
   }
+  //Switches input from an select/option box to number entry
   switchInput(){
     this.minusTen=false;
   }
+  //Updates database if incrementing or decrementing cart items
   inputChange(quant, cartItem){
     var val = quant;
     // if(this.lastChange==parseInt(val)){
@@ -74,6 +78,7 @@ export class CartComponent implements OnInit {
       
     
   }
+  //Removes an item and its quantity from a cart
   removeItem(cartItem, quant){
     this.cartService.removeCart(cartItem,parseInt(quant))
     .then(res => {
@@ -85,6 +90,7 @@ export class CartComponent implements OnInit {
       console.log(err);
     });
   }
+  //Logs user out of site
   logout(){
     this.authService.doLogout()
     .then((res) => {
@@ -95,7 +101,7 @@ export class CartComponent implements OnInit {
     });
   }
   
-  
+  //Clears all items from cart
   clearItems(){
     if(confirm("Are you sure you want to clear your cart?")){
     var holdLength = this.cartList.length;
@@ -104,17 +110,19 @@ export class CartComponent implements OnInit {
     }
     }
   }
+//Increases or decreases item quantity in cart
   addCart(cartItem, quant){
   this.cartService.incrementCart(cartItem,quant)
     .then(res => {
       console.log(res);
       this.getCart();
-       this.getSum();
+      this.getSum();
   }, err => {
       console.log(err);
     });
   
 }
+//Opens receipt dialog upon confirmation of purchase
 openDialog() {
 
     

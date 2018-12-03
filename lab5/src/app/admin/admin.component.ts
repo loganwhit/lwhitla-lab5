@@ -49,9 +49,12 @@ export class AdminComponent implements OnInit {
        this.upItem=null;
        this.policy=polService.getPolicy();
        this.DMCA=DMCAService.getDMCA();
+       
       this.db=firebase.firestore();
+      //Gets all reports that have been filed
       this.db.collection("reports").get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
+          //Stores the reports per item and comment number
           let data={id: doc.id,
           commentNumbers: doc.data()}
         this.userReports.push(data);
@@ -64,6 +67,7 @@ export class AdminComponent implements OnInit {
        
 
   }
+  //Returns all items in the database
   getItems(){
     this.startService.getAll()
        .then(res => {
@@ -71,10 +75,12 @@ export class AdminComponent implements OnInit {
       this.items=res;
     })
   }
+  //Updates a selected item
   updateProduct(value){
     this.adminServ.updateItem(value, this.upItem._id)
     .then(res => {
       console.log(res);
+      //Sets the chosen update item to null
       this.upItem=null;
       this.getItems();
       
@@ -89,13 +95,16 @@ export class AdminComponent implements OnInit {
     //   this.router.navigate(['/login']);
     // }
   }
+  //Sets the editable policy to a policy from PolicyService
   setPolicy(policy){
     this.polService.setPolicy(policy);
     
   }
+  //Sets DMCA to a DMCA from DMCAService
   setDMCA(DMCA){
     this.DMCAService.setDMCA(DMCA);
   }
+  //Gets all users registered in firebase
   setUsers(){
     this.users=[];
     this.collection=this.authService.getAllUsers();
@@ -108,6 +117,7 @@ export class AdminComponent implements OnInit {
     }.bind(this));
 }.bind(this));
   }
+  //Change admin status
   changeStatus(user){
     if(user.data().isAdmin){
       this.collection.doc(user.id).set({
@@ -135,6 +145,7 @@ export class AdminComponent implements OnInit {
     }
     
   }
+  //Sets the update form
   updateForm(item){
     this.upItem=item;
     this.updateItem = this.fb.group({
@@ -147,6 +158,7 @@ export class AdminComponent implements OnInit {
     });
     
   }
+  //Sets the create form
   createForm(){
     this.addItem = this.fb.group({
       name: ['', Validators.required ],
@@ -157,6 +169,7 @@ export class AdminComponent implements OnInit {
       descript:['',Validators.required]
     });
   }
+  //Provides the ability to disable users
   disableUser(user){
     if(user.data().active){
       this.collection.doc(user.id).set({
@@ -183,6 +196,7 @@ export class AdminComponent implements OnInit {
         });
     }
   }
+  //Creates an item in the database using AdminService
   createItem(value){
     this.adminServ.addItem(value)
     .then(res => {
@@ -194,6 +208,7 @@ export class AdminComponent implements OnInit {
       console.log(err);
     });
   }
+  //Deletes and item in the database using AdminService
   deleteItem(item){
     if(confirm("Are you sure you want to delete "+item.name)){
     this.adminServ.deleteItem(item)
@@ -207,6 +222,7 @@ export class AdminComponent implements OnInit {
     });
     }
   }
+  //Logs user out of site
   logout(){
     this.authService.doLogout()
     .then((res) => {
@@ -216,6 +232,7 @@ export class AdminComponent implements OnInit {
       console.log("Logout error", error);
     });
   }
+  //Gets a comment from an item ID and comment index
   getComment(id,num){
     for(var i=0; i<this.items.length; i++){
       if(this.items[i]._id==id){
@@ -223,6 +240,7 @@ export class AdminComponent implements OnInit {
       }
     }
   }
+  //Hides a comment using an item ID and comment index
   hideComment(id,num){
     for(var i=0; i<this.items.length; i++){
       if(this.items[i]._id==id){
@@ -231,6 +249,7 @@ export class AdminComponent implements OnInit {
     }
     
   }
+  //Gets whether an item is hidden or not
   getHidden(id,num){
     for(var i=0; i<this.items.length; i++){
       if(this.items[i]._id==id){
@@ -240,6 +259,7 @@ export class AdminComponent implements OnInit {
   
 
 }
+//Shows a comment using an item ID and comment index
 showComment(id,num){
     for(var i=0; i<this.items.length; i++){
       if(this.items[i]._id==id){

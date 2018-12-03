@@ -11,13 +11,14 @@ import {CartComponent} from '../cart/cart.component';
   styleUrls: ['./receipt.component.css']
 })
 export class ReceiptComponent implements OnInit {
-
+//Upon buying items in cart receipt dialog opens up
   constructor(public thisDialogRef: MatDialogRef<ReceiptComponent>, 
   @Inject(MAT_DIALOG_DATA) public data, 
   private cartService : CartService) { }
 
   ngOnInit() {
   }
+  //Closes the dialog
   onCloseConfirm() {
     this.thisDialogRef.close('Confirm');
   }

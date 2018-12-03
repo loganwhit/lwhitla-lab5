@@ -16,6 +16,7 @@ export class CartService {
     this.cartList=[];
     this.getCatalogList();
   }
+  //Service function for buying an item
   buy(){
     var buyUrl = './api/items/cartBuy/buy';
     for(var i=0; i<this.cartList.length; i++){
@@ -54,6 +55,7 @@ export class CartService {
     
   
   }
+  //Service function for incrementing an item
   incrementCart(item,quant){
     return new Promise<any>((resolve, reject) => {
     var trigger = false;
@@ -116,12 +118,13 @@ export class CartService {
   
     
   }
- 
+ //Gets full list of items
   getCatalogList(){
     this.catalogList=this.startServ.getAll().then(res => {
       console.log(res);
     })
   }
+  //Adds an item to the cart - triggered from UserComponent
   addToCart(item,quant){
     
     var trigger = false;
@@ -181,6 +184,7 @@ export class CartService {
   
     });
   }
+  //Removes an item from the cart
   removeCart(cartItem, quant){
     
     var id =cartItem._id;
@@ -217,6 +221,7 @@ export class CartService {
   
     });
   }
+  //Returns the cartlist to the caller of the method
   getCart(){
     return this.cartList;
   }

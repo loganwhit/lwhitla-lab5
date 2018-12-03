@@ -15,7 +15,11 @@ export class UserService {
     public afAuth: AngularFireAuth
   ){
   }
-  
+// Firebase Authentication sources used
+//   https://github.com/AngularTemplates/firebase-authentication-with-angular-5
+
+// https://angular-templates.io/tutorials/about/firebase-authentication-with-angular?fbclid=IwAR2BLHKp-FbK40yG9pTvU_96bgHduq10vmgHCM7FSVKbdEay8UYP8j7wcKs 
+  //Returns current user logged in
   getCurrentUser(){
     return new Promise<any>((resolve, reject) => {
       var user = firebase.auth().onAuthStateChanged(function(user){

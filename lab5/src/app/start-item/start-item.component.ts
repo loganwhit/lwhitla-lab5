@@ -11,9 +11,9 @@ export class StartItemComponent implements OnInit {
   numbers;
   firstFive;
   constructor(public thisDialogRef: MatDialogRef<StartItemComponent>, @Inject(MAT_DIALOG_DATA) public data, private commentService : ItemCommentService) {
-    this.numbers = Array(this.data.item.comments.length).fill(1).map((x,i)=>i);
-    if(this.numbers.length>5){
-      this.firstFive=this.numbers.slice(0, 5);
+    this.numbers = Array(this.data.item.comments.length).fill(1).map((x,i)=>i); //Gets an array of numbers equivalent to the number of comments
+    if(this.numbers.length>5){ 
+      this.firstFive=this.numbers.slice(0, 5); //If numbers is larger than five it gets the first five numbers of the array
     }
     else{
       this.firstFive=this.numbers;
@@ -22,7 +22,7 @@ export class StartItemComponent implements OnInit {
   }
   ngOnInit() {
   }
-
+//Closes the dialog
   onCloseConfirm() {
     this.thisDialogRef.close('Confirm');
   }
