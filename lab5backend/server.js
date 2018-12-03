@@ -66,12 +66,12 @@ router.route('/items')
             console.log("Price is mandatory");
             return;
         }
-        if(req.body.tax != ''){
-        item.tax = parseFloat(removeTags(req.body.tax));
-        }
-        else{
-            item.tax=0;
-        }
+        // if(req.body.tax != ''){
+        // item.tax = parseFloat(removeTags(req.body.tax));
+        // }
+        // else{
+        //     item.tax=0;
+        // }
         if(req.body.quantity != ''){
             item.quantity=parseInt(removeTags(req.body.quantity));
         }
@@ -131,9 +131,9 @@ router.route('/items/:item_id')
             if(req.body.quantity != undefined){
             item.quantity =parseInt( removeTags(req.body.quantity));
             }
-            if(req.body.tax != undefined){
-                item.tax = parseFloat(removeTags(req.body.tax));
-            }
+            // if(req.body.tax != undefined){
+            //     item.tax = parseFloat(removeTags(req.body.tax));
+            // }
             
             item.save(function(err){
                 if(err){

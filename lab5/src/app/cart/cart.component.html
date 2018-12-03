@@ -1,6 +1,8 @@
 <nav  mat-tab-nav-bar>
     <a mat-tab-link routerLink="/user">Home</a>
+  <div *ngIf="isAdmin">
     <a mat-tab-link routerLink="/admin">Admin</a>
+    </div>
     <a mat-tab-link routerLink="/profile">Profile</a>
     <a mat-tab-link id="logoutNavButton" (click)="logout()" routerLink="/start">Logout</a>
 </nav>

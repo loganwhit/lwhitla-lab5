@@ -10,6 +10,8 @@ import {CartComponent} from '../cart/cart.component';
   templateUrl: './receipt.component.html',
   styleUrls: ['./receipt.component.css']
 })
+//Source for modals
+// https://medium.com/codingthesmartway-com-blog/angular-material-part-2-popups-modals-1ed0c2405f18
 export class ReceiptComponent implements OnInit {
 //Upon buying items in cart receipt dialog opens up
   constructor(public thisDialogRef: MatDialogRef<ReceiptComponent>, 

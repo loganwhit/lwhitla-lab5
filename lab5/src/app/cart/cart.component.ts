@@ -3,7 +3,8 @@ import {CartService} from './cart.service';
 import {AuthService} from '../core/auth.service';
 import { Router } from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {ReceiptComponent} from '../receipt/receipt.component'
+import {ReceiptComponent} from '../receipt/receipt.component';
+import {UserService} from '../core/user.service';
 
 @Component({
   selector: 'app-cart',
@@ -16,21 +17,39 @@ export class CartComponent implements OnInit {
   numbers;
   minusTen;
   sumTotal;
+  isAdmin;
  
 
-  constructor(private cartService : CartService, private authService: AuthService, private router : Router, private dialog : MatDialog,
+  constructor(private cartService : CartService, private authService: AuthService, private router : Router, private dialog : MatDialog, private userService:UserService
   ) {this.cartList=this.cartService.getCart();
   this.numbers = Array(10).fill(1).map((x,i)=>i); //Initializes an array to hold a number from 0-9
     this.minusTen=true;
     
     this.getSum();
-    
+    userService.getCurrentUser()
+    .then(res => {
+      var docRef = authService.getUser(res);
+      
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+          
+           this.isAdmin=doc.data().isAdmin;
+        } else {
+            authService.addUser(res);
+            console.log("No such document!");
+        }
+    }.bind(this)).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
+    });
   }
   getSum(){
     this.sumTotal=0;
     for (var i=0; i<this.cartList.length; i++){
       this.sumTotal += parseFloat(this.cartList[i].quantity)*parseFloat(this.cartList[i].price); 
     }
+    this.sumTotal = this.sumTotal.toFixed(2);
   }
   //Function for buying an item using CartService
   buy(){

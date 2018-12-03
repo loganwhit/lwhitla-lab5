@@ -8,6 +8,10 @@ import {AuthService} from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
+  //  Firebase Authentication sources used
+//   https://github.com/AngularTemplates/firebase-authentication-with-angular-5
+
+// https://angular-templates.io/tutorials/about/firebase-authentication-with-angular?fbclid=IwAR2BLHKp-FbK40yG9pTvU_96bgHduq10vmgHCM7FSVKbdEay8UYP8j7wcKs 
 export class AuthGuard implements CanActivate {
   constructor(
     public afAuth: AngularFireAuth,

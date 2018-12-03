@@ -31,7 +31,7 @@ export class AdminComponent implements OnInit {
   hiddenReports;
   
   
- private items;
+
   constructor(private fb: FormBuilder,
   private userService: UserService,
   private router: Router,
@@ -41,11 +41,13 @@ export class AdminComponent implements OnInit {
   private polService : PolicyService,
   private DMCAService : DMCAService,
   private itemService :ItemCommentService) {
+    this.items=[];
+    this.getItems();
       this.users=[];
       this.userReports=[];
        this.createForm();
        this.setUsers();
-       this.getItems();
+       
        this.upItem=null;
        this.policy=polService.getPolicy();
        this.DMCA=DMCAService.getDMCA();
@@ -94,6 +96,7 @@ export class AdminComponent implements OnInit {
     // if(this.userService.getCurrentUser()){
     //   this.router.navigate(['/login']);
     // }
+    
   }
   //Sets the editable policy to a policy from PolicyService
   setPolicy(policy){
@@ -152,7 +155,7 @@ export class AdminComponent implements OnInit {
       name: [item.name, Validators.required ],
       quantity: [item.quantity,Validators.required],
       price: [item.price,Validators.required],
-      tax: [item.tax,Validators.required],
+      // tax: [item.tax,Validators.required],
       // amountSold: ['',Validators.required],
       descript:[item.descript,Validators.required]
     });
@@ -164,7 +167,7 @@ export class AdminComponent implements OnInit {
       name: ['', Validators.required ],
       quantity: ['',Validators.required],
       price: ['',Validators.required],
-      tax: ['',Validators.required],
+      //tax: ['',Validators.required],
       // amountSold: ['',Validators.required],
       descript:['',Validators.required]
     });

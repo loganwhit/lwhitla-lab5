@@ -31,11 +31,13 @@ export class ProfileComponent implements OnInit {
   addIt;
   remainderItems;
   itemIndices;
+  isAdmin;
 
   constructor(public userService: UserService,
     
     private router: Router,
     public authService: AuthService,
+   
     private route: ActivatedRoute,
     private location : Location,
     private fb: FormBuilder,
@@ -44,6 +46,23 @@ export class ProfileComponent implements OnInit {
       this.addIt=false;
       this.itemIDs=[];
       this.itemArr=[];
+      userService.getCurrentUser()
+    .then(res => {
+      var docRef = authService.getUser(res);
+      
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+          
+           this.isAdmin=doc.data().isAdmin;
+        } else {
+            authService.addUser(res);
+            console.log("No such document!");
+        }
+    }.bind(this)).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
+    });
       //Gets all items and pushes item ids into their own array
       startService.getAll().then(function(res){
         for(var i=0; i<res.length; i++){
@@ -219,6 +238,9 @@ export class ProfileComponent implements OnInit {
   }
   //Deletes a list
   deleteList(){
+    if(!confirm("Do you wish to delete this list?")){
+      return;
+    }
     var listItemIDs=[];
     for(var i=0; i<this.itemReferences.length; i++){
    

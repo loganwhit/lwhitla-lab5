@@ -12,6 +12,8 @@ import {UserComponent} from '../user/user.component';
   templateUrl: './user-item.component.html',
   styleUrls: ['./user-item.component.css']
 })
+//Source for modals
+// https://medium.com/codingthesmartway-com-blog/angular-material-part-2-popups-modals-1ed0c2405f18
 export class UserItemComponent implements OnInit {
   showCommentField;
   numbers;
@@ -164,4 +166,4 @@ export class UserItemComponent implements OnInit {
   }
 }
  
-}
+

@@ -45,6 +45,11 @@ export class LoginComponent implements OnInit {
   }
   //Logs user in
   login(value, undefined){
+    if(value.email=="" || value.email==undefined){
+      alert("Please enter an email address");
+      return;
+    }
+      
     this.authService.doLogin(value, undefined)
     .then(res => {
       console.log(res);

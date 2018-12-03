@@ -7,6 +7,8 @@ import {ItemCommentService} from '../user-item/item-comment.service'
   templateUrl: './start-item.component.html',
   styleUrls: ['./start-item.component.css']
 })
+//Source for modals
+// https://medium.com/codingthesmartway-com-blog/angular-material-part-2-popups-modals-1ed0c2405f18
 export class StartItemComponent implements OnInit {
   numbers;
   firstFive;
